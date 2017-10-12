@@ -1,0 +1,33 @@
+<ion-header>
+    <ion-navbar color="primary">
+        <ion-buttons left>
+            <button menuToggle ion-button icon-only>
+              <ion-icon name="menu"></ion-icon>
+            </button>
+        </ion-buttons>
+        <ion-title>Homes</ion-title>
+        <ion-buttons right>
+          <button ion-button icon-only (click) ="openFacet()">
+              <ion-icon name="search"></ion-icon>
+        </button>
+        </ion-buttons>
+    </ion-navbar>
+</ion-header>
+
+<ion-content>
+    <ion-list>
+        <ion-item-sliding #item *ngFor="let h of homes" >
+            <button ion-item (click)="goToHomeDetail(h.src, h.title, h.status)">
+                <ion-thumbnail item-start class="animate-in-primary">
+                    <img src={{h.src}}>
+                </ion-thumbnail>
+                <h2><a>{{h.title}}</a></h2>
+                <p>Status: {{h.status}}</p>
+            </button>
+        </ion-item-sliding>
+         <hr>
+    </ion-list>
+    <ion-fab bottom right >
+       <button ion-fab (click)="presentModal()" color="secondary"><ion-icon name="home"></ion-icon></button>
+    </ion-fab>
+</ion-content>

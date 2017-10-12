@@ -1,0 +1,63 @@
+<!--
+  Generated template for the FacetPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+  <ion-navbar color="primary">
+    <ion-title>Search</ion-title>
+      <ion-buttons right>
+          <button (click)="closeFacet()" ion-button >
+              <span ion-text>Cancel</span>
+          </button>
+      </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+
+<ion-content>
+    <!--<form id="search-form" class="list" >-->
+      <ion-list id="search-list">
+          <ion-item-divider color="light">Location</ion-item-divider>
+          <ion-item>
+              <ion-searchbar (click)="showAddressModal()" [(ngModel)]="address.place"type="text" placeholder="Location">
+                  <ion-icon name="compass"></ion-icon>
+              </ion-searchbar>
+          </ion-item>
+          <ion-item-divider color="light"><ion-label>Distance: {{distance}}km</ion-label></ion-item-divider>
+          <ion-item>
+            <ion-range min="0" max="100" [(ngModel)]="distance" color="primary" [ngModelOptions]="{standalone: true}">
+              <ion-label range-left>0km</ion-label>
+              <ion-label range-right>100km</ion-label>
+            </ion-range>
+          </ion-item>
+          <ion-item-divider color="light">General info</ion-item-divider>
+          <ion-row>
+                <ion-col>
+                    <ion-item>
+                        <ion-label color="primary">Building type</ion-label>
+                        <ion-select interface="popover">
+                          <ion-option selected>Any</ion-option>
+                          <ion-option>House</ion-option>
+                          <ion-option>Apartment</ion-option>
+                          <ion-option>Other</ion-option>
+                        </ion-select>
+                    </ion-item>
+                </ion-col>
+                <ion-col>
+                    <ion-item>
+                        <ion-label color="primary">Building status</ion-label>
+                        <ion-select interface="popover">
+                          <ion-option selected>Any</ion-option>
+                          <ion-option>Ready for tenants</ion-option>
+                          <ion-option>Potential for renovation</ion-option>
+                          <ion-option>Beyond renovation</ion-option>
+                        </ion-select>
+                    </ion-item>
+                </ion-col>
+          </ion-row>
+      </ion-list>
+      <button ion-button full (click)="applyFilter()">Apply</button>
+    <!--</form>-->
+</ion-content>

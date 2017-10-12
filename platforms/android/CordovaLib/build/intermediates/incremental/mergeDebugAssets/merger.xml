@@ -1,0 +1,2 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merger version="3"><dataSet config="main"><source path="/Users/aidandonnelly/Desktop/FINAL YEAR/FYP - Housing Project/platforms/android/CordovaLib/assets"/><source path="/Users/aidandonnelly/Desktop/FINAL YEAR/FYP - Housing Project/platforms/android/CordovaLib/build/generated/assets/shaders/debug"/></dataSet><dataSet config="debug"><source path="/Users/aidandonnelly/Desktop/FINAL YEAR/FYP - Housing Project/platforms/android/CordovaLib/src/debug/assets"/></dataSet></merger>

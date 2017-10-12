@@ -1,0 +1,120 @@
+{
+  "_args": [
+    [
+      {
+        "raw": "cordova-plugin-native-spinner",
+        "scope": null,
+        "escapedName": "cordova-plugin-native-spinner",
+        "name": "cordova-plugin-native-spinner",
+        "rawSpec": "",
+        "spec": "latest",
+        "type": "tag"
+      },
+      "/Users/aidandonnelly/Desktop/FINAL YEAR/FYP - Housing Project/node_modules"
+    ]
+  ],
+  "_from": "cordova-plugin-native-spinner@latest",
+  "_id": "cordova-plugin-native-spinner@1.1.3",
+  "_inCache": true,
+  "_location": "/cordova-plugin-native-spinner",
+  "_nodeVersion": "6.10.2",
+  "_npmOperationalInternal": {
+    "host": "s3://npm-registry-packages",
+    "tmp": "tmp/cordova-plugin-native-spinner-1.1.3.tgz_1500942511782_0.8952596797607839"
+  },
+  "_npmUser": {
+    "name": "greybax",
+    "email": "greybax@gmail.com"
+  },
+  "_npmVersion": "3.10.8",
+  "_phantomChildren": {},
+  "_requested": {
+    "raw": "cordova-plugin-native-spinner",
+    "scope": null,
+    "escapedName": "cordova-plugin-native-spinner",
+    "name": "cordova-plugin-native-spinner",
+    "rawSpec": "",
+    "spec": "latest",
+    "type": "tag"
+  },
+  "_requiredBy": [
+    "#USER",
+    "/"
+  ],
+  "_resolved": "https://registry.npmjs.org/cordova-plugin-native-spinner/-/cordova-plugin-native-spinner-1.1.3.tgz",
+  "_shasum": "2af3b90ac930714dc56eeccbb166e338bbf90788",
+  "_shrinkwrap": null,
+  "_spec": "cordova-plugin-native-spinner",
+  "_where": "/Users/aidandonnelly/Desktop/FINAL YEAR/FYP - Housing Project/node_modules",
+  "author": {
+    "name": "Aleksandr Filatov"
+  },
+  "bugs": {
+    "url": "https://github.com/greybax/cordova-plugin-native-spinner/issues"
+  },
+  "cordova": {
+    "id": "cordova-plugin-native-spinner",
+    "platforms": [
+      "android",
+      "ios",
+      "wp8",
+      "windows"
+    ]
+  },
+  "dependencies": {},
+  "description": "A Cordova plugin for showing a progress indicator based on Paldom/SpinnerDialog",
+  "devDependencies": {},
+  "directories": {},
+  "dist": {
+    "shasum": "2af3b90ac930714dc56eeccbb166e338bbf90788",
+    "tarball": "https://registry.npmjs.org/cordova-plugin-native-spinner/-/cordova-plugin-native-spinner-1.1.3.tgz"
+  },
+  "engines": [
+    {
+      "name": "cordova",
+      "version": ">=3.4.0"
+    }
+  ],
+  "gitHead": "1e3fefce335d74777c8985869a675a66b6ebff5d",
+  "homepage": "https://github.com/greybax/cordova-plugin-native-spinner#readme",
+  "keywords": [
+    "cordova",
+    "spinner",
+    "dialog",
+    "spinnerdialog",
+    "progress",
+    "indicator",
+    "native",
+    "progressindicator",
+    "plugin",
+    "notification",
+    "ecosystem:cordova",
+    "cordova-android",
+    "cordova-ios",
+    "cordova-wp8",
+    "cordova-windows",
+    "android",
+    "ios",
+    "wp8",
+    "windows",
+    "10",
+    "8.1",
+    "phone"
+  ],
+  "license": "MIT",
+  "maintainers": [
+    {
+      "name": "greybax",
+      "email": "greybax@gmail.com"
+    }
+  ],
+  "name": "cordova-plugin-native-spinner",
+  "optionalDependencies": {},
+  "readme": "ERROR: No README data found!",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/greybax/cordova-plugin-native-spinner.git"
+  },
+  "scripts": {},
+  "version": "1.1.3"
+}

@@ -1,0 +1,28 @@
+
+<ion-header>
+
+  <ion-navbar color="primary">
+    <ion-title>Login</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+   <form [formGroup]="loginForm" (submit)="loginUser()" novalidate>
+    <ion-item>
+      <ion-label floating>Email</ion-label>
+      <ion-input formControlName="email" type="email"
+        [class.invalid]="!loginForm.controls.email.valid && blur"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label floating>Password</ion-label>
+      <ion-input formControlName="password" type="password"
+        [class.invalid]="!loginForm.controls.password.valid && blur"></ion-input>
+    </ion-item>
+    <button ion-button block type="submit" [disabled]="!loginForm.valid">
+      Login
+    </button>
+  </form>
+   <a href-inappbrowser="/signup" id="login-button2" class="button button-positive button-block button-clear" padding (click)="goToRegister()">Or create an account</a>
+</ion-content>
