@@ -1,13 +1,13 @@
 webpackJsonp([1],{
 
-/***/ 323:
+/***/ 436:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(11);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__location_search__ = __webpack_require__(327);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(12);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__location_search__ = __webpack_require__(440);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "LocationSearchPageModule", function() { return LocationSearchPageModule; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -29,7 +29,7 @@ LocationSearchPageModule = __decorate([
             __WEBPACK_IMPORTED_MODULE_2__location_search__["a" /* LocationSearchPage */],
         ],
         imports: [
-            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["d" /* IonicPageModule */].forChild(__WEBPACK_IMPORTED_MODULE_2__location_search__["a" /* LocationSearchPage */]),
+            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["e" /* IonicPageModule */].forChild(__WEBPACK_IMPORTED_MODULE_2__location_search__["a" /* LocationSearchPage */]),
         ],
         exports: [
             __WEBPACK_IMPORTED_MODULE_2__location_search__["a" /* LocationSearchPage */]
@@ -41,12 +41,12 @@ LocationSearchPageModule = __decorate([
 
 /***/ }),
 
-/***/ 327:
+/***/ 440:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(11);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(12);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return LocationSearchPage; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -101,11 +101,11 @@ var LocationSearchPage = (function () {
     return LocationSearchPage;
 }());
 LocationSearchPage = __decorate([
-    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["e" /* IonicPage */])(),
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* IonicPage */])(),
     __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_6" /* Component */])({
         selector: 'page-location-search',template:/*ion-inline-start:"/Users/aidandonnelly/Desktop/FINAL YEAR/HousingProject/src/pages/location-search/location-search.html"*/'<!--\n  Generated template for the LocationSearchPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n\n<ion-header>\n  <ion-navbar>\n         <ion-searchbar id="journey_from" name="journey_from" type="text" placeholder="Enter location" [(ngModel)]="fromValue" style="border:none; background-image: none;">\n         </ion-searchbar>\n  </ion-navbar>\n\n</ion-header>\n\n\n<ion-content padding>\n<ion-list>\n        <ion-card>\n          <ion-card-header>\n              <ion-list>\n                  <ion-item>\n                    <button ion-button full> <ion-icon name="navigate"></ion-icon>Current Location</button>\n                  </ion-item>\n              </ion-list>\n          </ion-card-header>\n        </ion-card>\n    </ion-list>\n</ion-content>\n'/*ion-inline-end:"/Users/aidandonnelly/Desktop/FINAL YEAR/HousingProject/src/pages/location-search/location-search.html"*/,
     }),
-    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavParams */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* ViewController */]])
+    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* NavParams */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* ViewController */]])
 ], LocationSearchPage);
 
 //# sourceMappingURL=location-search.js.map

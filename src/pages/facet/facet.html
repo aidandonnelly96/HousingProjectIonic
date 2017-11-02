@@ -17,17 +17,18 @@
 
 
 <ion-content>
-    <!--<form id="search-form" class="list" >-->
-      <ion-list id="search-list">
+    <!--<form #form="ngForm" [formGroup]="search" novalidate>-->
+    <form #form="ngForm" [formGroup]="search" (ngSubmit)="applyFilter()" novalidate>
+        <ion-list id="search-list">
           <ion-item-divider color="light">Location</ion-item-divider>
-          <ion-item>
-              <ion-searchbar (click)="showAddressModal()" [(ngModel)]="address.place"type="text" placeholder="Location">
+          <ion-item [formGroup]="search">
+              <ion-searchbar (click)="showAddressModal()" [(ngModel)]="address.place"type="text" placeholder="Location" formControlName="location">
                   <ion-icon name="compass"></ion-icon>
               </ion-searchbar>
           </ion-item>
           <ion-item-divider color="light"><ion-label>Distance: {{distance}}km</ion-label></ion-item-divider>
-          <ion-item>
-            <ion-range min="0" max="100" [(ngModel)]="distance" color="primary" [ngModelOptions]="{standalone: true}">
+          <ion-item [formGroup]="search">
+            <ion-range formControlName="distance" min="0" max="100" [(ngModel)]="distance" color="primary">
               <ion-label range-left>0km</ion-label>
               <ion-label range-right>100km</ion-label>
             </ion-range>
@@ -35,9 +36,9 @@
           <ion-item-divider color="light">General info</ion-item-divider>
           <ion-row>
                 <ion-col>
-                    <ion-item>
+                    <ion-item [formGroup]="search">
                         <ion-label color="primary">Building type</ion-label>
-                        <ion-select interface="popover">
+                        <ion-select interface="popover" formControlName="buildingType">
                           <ion-option selected>Any</ion-option>
                           <ion-option>House</ion-option>
                           <ion-option>Apartment</ion-option>
@@ -46,18 +47,19 @@
                     </ion-item>
                 </ion-col>
                 <ion-col>
-                    <ion-item>
+                    <ion-item [formGroup]="search">
                         <ion-label color="primary">Building status</ion-label>
-                        <ion-select interface="popover">
+                        <ion-select interface="popover" formControlName="status">
                           <ion-option selected>Any</ion-option>
-                          <ion-option>Ready for tenants</ion-option>
+                          <ion-option>Suitable for tenants</ion-option>
                           <ion-option>Potential for renovation</ion-option>
                           <ion-option>Beyond renovation</ion-option>
                         </ion-select>
                     </ion-item>
                 </ion-col>
           </ion-row>
+          <!--<button ion-button full (click)="applyFilter()">Apply</button>-->
+          <button ion-button full type="submit">Apply</button>
       </ion-list>
-      <button ion-button full (click)="applyFilter()">Apply</button>
-    <!--</form>-->
+    </form>
 </ion-content>

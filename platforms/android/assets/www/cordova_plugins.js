@@ -300,24 +300,32 @@ module.exports = [
         "clobbers": [
             "nativegeocoder"
         ]
+    },
+    {
+        "id": "com.telerik.plugins.nativepagetransitions.NativePageTransitions",
+        "file": "plugins/com.telerik.plugins.nativepagetransitions/www/NativePageTransitions.js",
+        "pluginId": "com.telerik.plugins.nativepagetransitions",
+        "clobbers": [
+            "window.plugins.nativepagetransitions"
+        ]
     }
 ];
 module.exports.metadata = 
 // TOP OF METADATA
 {
     "cordova-plugin-compat": "1.2.0",
-    "cordova-plugin-console": "1.0.5",
     "cordova-plugin-device": "1.1.4",
     "cordova-plugin-geolocation": "2.4.3",
     "cordova-plugin-splashscreen": "4.0.3",
     "cordova-plugin-statusbar": "2.2.1",
-    "cordova-plugin-whitelist": "1.3.1",
     "ionic-plugin-keyboard": "2.2.1",
     "cordova-plugin-camera": "2.4.1",
     "cordova-plugin-native-spinner": "1.1.3",
     "cordova-plugin-file": "4.3.3",
     "cordova-plugin-advanced-http": "1.6.1",
-    "cordova-plugin-nativegeocoder": "2.0.3"
+    "cordova-plugin-nativegeocoder": "2.0.3",
+    "com.telerik.plugins.nativepagetransitions": "0.6.5",
+    "cordova-plugin-whitelist": "1.3.2"
 };
 // BOTTOM OF METADATA
 });

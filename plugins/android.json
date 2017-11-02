@@ -7,9 +7,6 @@
         "files": {}
     },
     "installed_plugins": {
-        "cordova-plugin-console": {
-            "PACKAGE_NAME": "com.ionicframework.ionmapleaflet732649"
-        },
         "cordova-plugin-device": {
             "PACKAGE_NAME": "com.ionicframework.ionmapleaflet732649"
         },
@@ -20,9 +17,6 @@
             "PACKAGE_NAME": "com.ionicframework.ionmapleaflet732649"
         },
         "cordova-plugin-statusbar": {
-            "PACKAGE_NAME": "com.ionicframework.ionmapleaflet732649"
-        },
-        "cordova-plugin-whitelist": {
             "PACKAGE_NAME": "com.ionicframework.ionmapleaflet732649"
         },
         "ionic-plugin-keyboard": {
@@ -38,6 +32,12 @@
             "PACKAGE_NAME": "com.ionicframework.ionmapleaflet732649"
         },
         "cordova-plugin-nativegeocoder": {
+            "PACKAGE_NAME": "com.ionicframework.ionmapleaflet732649"
+        },
+        "com.telerik.plugins.nativepagetransitions": {
+            "PACKAGE_NAME": "com.ionicframework.ionmapleaflet732649"
+        },
+        "cordova-plugin-whitelist": {
             "PACKAGE_NAME": "com.ionicframework.ionmapleaflet732649"
         }
     },

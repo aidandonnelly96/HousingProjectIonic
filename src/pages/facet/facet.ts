@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ModalController, ViewController } from 'ionic-angular';
 import { LocationSearchPage } from '../location-search/location-search'
 import { AutocompletePage } from '../autocomplete/autocomplete';
+import { DatabaseProvider } from '../../providers/database/database';
+import {Validators, FormBuilder, FormGroup, FormControl } from '@angular/forms';
 
 
 /**
@@ -16,18 +18,25 @@ import { AutocompletePage } from '../autocomplete/autocomplete';
   templateUrl: 'facet.html',
 })
 export class FacetPage {
+    public search: FormGroup;
     address;
     searchValue:string;
     coords: Array<number>;
     fromValue:string;
     
     private distance;
-  constructor(public navCtrl: NavController, public navParams: NavParams, public modalCtrl: ModalController, public viewCtrl: ViewController) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public modalCtrl: ModalController, public viewCtrl: ViewController, public db: DatabaseProvider, private formBuilder: FormBuilder) {
     this.address = {
       place: ''
     };
     this.searchValue="";
     this.distance =0;
+    this.search = new FormGroup({
+       distance: new FormControl(),
+       buildingType: new FormControl(),
+       location: new FormControl(),
+       status: new FormControl()
+    });
   }
 
   ionViewDidLoad() {
@@ -49,8 +58,9 @@ export class FacetPage {
     });
     modal.present();
   }
-  
-  applyFilter () {
-    this.viewCtrl.dismiss(this.coords);
+  applyFilter() {
+       //console.log(this.search.value.distance);
+     this.db.getRequestedHomes(Number(this.coords[0]), Number(this.coords[1]), parseInt(this.search.value.distance), this.search.value.buildingType, this.search.value.status);
+     this.viewCtrl.dismiss();
   }
 }

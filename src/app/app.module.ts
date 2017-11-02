@@ -1,11 +1,12 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { ErrorHandler, NgModule } from '@angular/core';
 import { Geolocation } from '@ionic-native/geolocation';
+import { NativePageTransitions } from '@ionic-native/native-page-transitions';
 import { HTTP } from '@ionic-native/HTTP';
+import { StatusBar } from '@ionic-native/status-bar';
 
 import { NativeGeocoder, NativeGeocoderReverseResult, NativeGeocoderForwardResult } from '@ionic-native/native-geocoder';
 
-import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
 import { IonicApp, IonicModule, IonicErrorHandler, NavController } from 'ionic-angular';
@@ -17,6 +18,7 @@ import { MapPage } from '../pages/map/map';
 import { CameraPage } from '../pages/camera/camera';
 import { ModalPage } from '../pages/modal/modal';
 import { HomeDetailPage } from '../pages/home-detail/home-detail';
+import { HomeDetailPopover } from '../pages/home-detail/home-detail';
 import { LoginPage } from '../pages/login/login';
 import { FacetPage } from '../pages/facet/facet';
 import { Camera } from '@ionic-native/camera';
@@ -27,19 +29,18 @@ import { SignupPage } from '../pages/signup/signup';
 import { SpinnerDialog } from '@ionic-native/spinner-dialog';
 
 import { AuthProvider } from '../providers/auth/auth';
-import { AngularFireModule } from 'angularfire2';
-import { AngularFireAuthModule } from 'angularfire2/auth';
-import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { DatabaseProvider } from '../providers/database/database';
 
-var firebaseConfig = {
-    apiKey: "AIzaSyDYfzqcaXSUNRKhVM60RXQaQsIOp0Amsbo",
-    authDomain: "finalyearhousingproject.firebaseapp.com",
-    databaseURL: "https://finalyearhousingproject.firebaseio.com",
-    projectId: "finalyearhousingproject",
-    storageBucket: "finalyearhousingproject.appspot.com",
-    messagingSenderId: "1021387443585"
-  };
+import * as firebase from 'firebase/app';
+
+firebase.initializeApp({
+        apiKey: "AIzaSyDYfzqcaXSUNRKhVM60RXQaQsIOp0Amsbo",
+        authDomain: "finalyearhousingproject.firebaseapp.com",
+        databaseURL: "https://finalyearhousingproject.firebaseio.com",
+        projectId: "finalyearhousingproject",
+        storageBucket: "finalyearhousingproject.appspot.com",
+        messagingSenderId: "1021387443585"
+    });
 
 @NgModule({
   declarations: [
@@ -47,6 +48,7 @@ var firebaseConfig = {
     ModalPage,
     CameraPage,
     HomeDetailPage,
+    HomeDetailPopover,
     LoginPage,
     AutocompletePage,
     SignupPage,
@@ -57,10 +59,7 @@ var firebaseConfig = {
   ],
   imports: [
     BrowserModule,
-    IonicModule.forRoot(MyApp),
-    AngularFireModule.initializeApp(firebaseConfig),
-    AngularFireAuthModule,
-    AngularFireDatabaseModule,
+    IonicModule.forRoot(MyApp)
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -69,6 +68,7 @@ var firebaseConfig = {
     FacetPage,
     CameraPage,
     AutocompletePage,
+    HomeDetailPopover,
     SignupPage,
     HomeDetailPage,
     HomePage,
@@ -77,6 +77,7 @@ var firebaseConfig = {
     MapPage
   ],
   providers: [
+    NativePageTransitions,
     StatusBar,
     AuthProvider,
     SpinnerDialog,

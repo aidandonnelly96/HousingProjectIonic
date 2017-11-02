@@ -9,6 +9,10 @@
                 "parents": {
                     "/*": [
                         {
+                            "xml": "<feature name=\"NativePageTransitions\"><param name=\"ios-package\" value=\"NativePageTransitions\" /></feature>",
+                            "count": 1
+                        },
+                        {
                             "xml": "<feature name=\"File\"><param name=\"ios-package\" value=\"CDVFile\" /><param name=\"onload\" value=\"true\" /></feature>",
                             "count": 1
                         },
@@ -22,10 +26,6 @@
                         },
                         {
                             "xml": "<preference name=\"CameraUsesGeolocation\" value=\"false\" />",
-                            "count": 1
-                        },
-                        {
-                            "xml": "<feature name=\"Console\"><param name=\"ios-package\" value=\"CDVLogger\" /></feature>",
                             "count": 1
                         },
                         {
@@ -100,6 +100,9 @@
         }
     },
     "installed_plugins": {
+        "com.telerik.plugins.nativepagetransitions": {
+            "PACKAGE_NAME": "com.ionicframework.ionmapleaflet732649"
+        },
         "cordova-plugin-add-swift-support": {
             "PACKAGE_NAME": "com.ionicframework.ionmapleaflet732649"
         },
@@ -115,9 +118,6 @@
         "cordova-plugin-camera": {
             "CAMERA_USAGE_DESCRIPTION": " ",
             "PHOTOLIBRARY_USAGE_DESCRIPTION": " ",
-            "PACKAGE_NAME": "com.ionicframework.ionmapleaflet732649"
-        },
-        "cordova-plugin-console": {
             "PACKAGE_NAME": "com.ionicframework.ionmapleaflet732649"
         },
         "cordova-plugin-device": {
@@ -140,15 +140,23 @@
         "cordova-plugin-statusbar": {
             "PACKAGE_NAME": "com.ionicframework.ionmapleaflet732649"
         },
-        "cordova-plugin-whitelist": {
+        "ionic-plugin-keyboard": {
             "PACKAGE_NAME": "com.ionicframework.ionmapleaflet732649"
         },
-        "ionic-plugin-keyboard": {
+        "cordova-plugin-whitelist": {
             "PACKAGE_NAME": "com.ionicframework.ionmapleaflet732649"
         }
     },
     "dependent_plugins": {},
     "modules": [
+        {
+            "id": "com.telerik.plugins.nativepagetransitions.NativePageTransitions",
+            "file": "plugins/com.telerik.plugins.nativepagetransitions/www/NativePageTransitions.js",
+            "pluginId": "com.telerik.plugins.nativepagetransitions",
+            "clobbers": [
+                "window.plugins.nativepagetransitions"
+            ]
+        },
         {
             "id": "cordova-plugin-file.DirectoryEntry",
             "file": "plugins/cordova-plugin-file/www/DirectoryEntry.js",
@@ -388,22 +396,6 @@
             ]
         },
         {
-            "id": "cordova-plugin-console.console",
-            "file": "plugins/cordova-plugin-console/www/console-via-logger.js",
-            "pluginId": "cordova-plugin-console",
-            "clobbers": [
-                "console"
-            ]
-        },
-        {
-            "id": "cordova-plugin-console.logger",
-            "file": "plugins/cordova-plugin-console/www/logger.js",
-            "pluginId": "cordova-plugin-console",
-            "clobbers": [
-                "cordova.logger"
-            ]
-        },
-        {
             "id": "cordova-plugin-device.device",
             "file": "plugins/cordova-plugin-device/www/device.js",
             "pluginId": "cordova-plugin-device",
@@ -486,19 +478,19 @@
         }
     ],
     "plugin_metadata": {
+        "com.telerik.plugins.nativepagetransitions": "0.6.5",
         "cordova-plugin-add-swift-support": "1.7.0",
         "cordova-plugin-compat": "1.2.0",
         "cordova-plugin-file": "4.3.3",
         "cordova-plugin-advanced-http": "1.6.1",
         "cordova-plugin-camera": "2.4.1",
-        "cordova-plugin-console": "1.0.5",
         "cordova-plugin-device": "1.1.4",
         "cordova-plugin-geolocation": "2.4.3",
         "cordova-plugin-native-spinner": "1.1.3",
         "cordova-plugin-nativegeocoder": "2.0.3",
         "cordova-plugin-splashscreen": "4.0.3",
         "cordova-plugin-statusbar": "2.2.1",
-        "cordova-plugin-whitelist": "1.3.1",
-        "ionic-plugin-keyboard": "2.2.1"
+        "ionic-plugin-keyboard": "2.2.1",
+        "cordova-plugin-whitelist": "1.3.2"
     }
 }

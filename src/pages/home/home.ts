@@ -2,9 +2,12 @@ import { Component, ViewChild } from '@angular/core';
 import { Nav, ModalController, ViewController } from 'ionic-angular';
 import { ModalPage } from '../modal/modal';
 import { HomeDetailPage } from '../home-detail/home-detail';
-import { NavController } from 'ionic-angular';
+import { NavController, Events } from 'ionic-angular';
+import { Geolocation } from '@ionic-native/geolocation';
 import { FacetPage } from '../facet/facet'
 import { PopoverController } from 'ionic-angular';
+import { NativePageTransitions, NativeTransitionOptions } from '@ionic-native/native-page-transitions';
+import { DatabaseProvider } from '../../providers/database/database';
 
 
 @Component({
@@ -14,45 +17,63 @@ import { PopoverController } from 'ionic-angular';
 export class HomePage {
 
  @ViewChild(Nav) nav: Nav;
- homes: Array<{title: string, src: string, status: string}>;
+  homes = []; 
+  currentLatitude: number; 
+  currentLongitude: number;
 
-  constructor(public navCtrl: NavController, public modalCtrl: ModalController, public popoverCtrl: PopoverController) {
-  this.homes = [
-          { title: '7 Maynooth Road', src: 'https://thoughtcatalog.files.wordpress.com/2014/06/shutterstock_183100415.jpg?w=1000&h=666', status: 'Suitable for living'},
-          { title: '12 Dublin Road', src: 'http://cdn.extra.ie/wp-content/uploads/2017/06/24135659/Philip-Marley-6.jpg', status: 'Potential for Renovation'},
-          { title: '12 Malahide Road', src: 'http://cdn.extra.ie/wp-content/uploads/2017/06/24135659/Philip-Marley-6.jpg', status: 'Beyond Renovation'},
-          { title: '7 Maynooth Road', src: 'https://thoughtcatalog.files.wordpress.com/2014/06/shutterstock_183100415.jpg?w=1000&h=666', status: 'Suitable for living'},
-          { title: '12 Dublin Road', src: 'http://cdn.extra.ie/wp-content/uploads/2017/06/24135659/Philip-Marley-6.jpg', status: 'Potential for Renovation'},
-          { title: '12 Malahide Road', src: 'http://cdn.extra.ie/wp-content/uploads/2017/06/24135659/Philip-Marley-6.jpg', status: 'Beyond Renovation'},
-          { title: '7 Maynooth Road', src: 'https://thoughtcatalog.files.wordpress.com/2014/06/shutterstock_183100415.jpg?w=1000&h=666', status: 'Suitable for living'},
-          { title: '12 Dublin Road', src: 'http://cdn.extra.ie/wp-content/uploads/2017/06/24135659/Philip-Marley-6.jpg', status: 'Potential for Renovation'},
-          { title: '12 Malahide Road', src: 'http://cdn.extra.ie/wp-content/uploads/2017/06/24135659/Philip-Marley-6.jpg', status: 'Beyond Renovation'},
-          { title: '7 Maynooth Road', src: 'https://thoughtcatalog.files.wordpress.com/2014/06/shutterstock_183100415.jpg?w=1000&h=666', status: 'Suitable for living'},
-          { title: '12 Dublin Road', src: 'http://cdn.extra.ie/wp-content/uploads/2017/06/24135659/Philip-Marley-6.jpg', status: 'Potential for Renovation'},
-          { title: '12 Malahide Road', src: 'http://cdn.extra.ie/wp-content/uploads/2017/06/24135659/Philip-Marley-6.jpg', status: 'Beyond Renovation'}
-      ];
-  }
-goToHomeDetail(homeSrc, homeTitle, homeStatus) {
-    //push another page onto the history stack
-    //causing the nav controller to animate the new page in
-    this.navCtrl.push(HomeDetailPage, {
-        title: homeTitle,
-        src: homeSrc,
-        status: homeStatus
-    });
-  }
+    constructor(public navCtrl: NavController, public modalCtrl: ModalController, public popoverCtrl: PopoverController, private nativePageTransitions: NativePageTransitions, public db: DatabaseProvider, public events: Events, private geolocation: Geolocation) {
+        this.homes = this.db.homes;
+        events.subscribe('home:entered', (time) => {
+            this.homes=this.db.homes;
+        });
+    }
 
-  presentModal(){
-    let modal = this.modalCtrl.create(ModalPage);
-    modal.present();
-  }
-  /*
-  openFacet(){
-    this.navCtrl.push( FacetPage );
-  }*/
-  openFacet(){
-    let modal = this.modalCtrl.create( FacetPage );
-    let me = this;
-    modal.present();
-  }
+    goToHomeDetail(homeID, homeTitle, homeStatus) {
+        this.navCtrl.push(HomeDetailPage, {
+            id: homeID,
+            title: homeTitle,
+            status: homeStatus
+        });
+    }
+
+    ionViewWillLeave() {
+
+     let options: NativeTransitionOptions = {
+        direction: 'right',
+        duration: 500,
+        iosdelay: 150,
+        androiddelay: 150,
+        fixedPixelsTop: 0,
+        fixedPixelsBottom: 55
+       };
+
+     this.nativePageTransitions.slide(options);
+
+    }
+    
+    /*getRequestedHomes(center, radius){
+        console.log(this.currentLatitude+" "+ this.currentLongitude)
+        var homes = this.db.getRequestedHomes(this.currentLatitude, this.currentLongitude, 5);
+        this.homes = homes;
+        console.log(homes);
+    }*/
+
+    doRefresh(refresher) {
+      console.log("refreshing");
+      
+      setTimeout(() => {
+          console.log('Async operation has ended');
+          refresher.complete();
+      }, 2000);
+    }
+
+    presentModal(){
+        let modal = this.modalCtrl.create(ModalPage);
+        modal.present();
+    }
+
+    openFacet(){
+        let modal = this.modalCtrl.create( FacetPage );
+        modal.present();
+    }
 }

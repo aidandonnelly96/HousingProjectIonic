@@ -7,17 +7,25 @@
 <ion-header>
   <ion-navbar color="primary">
     <ion-title>{{title}}</ion-title>
+      <ion-buttons right>
+          <button ion-button (click)="presentPopover(event)">
+            <ion-icon name="more"></ion-icon>
+          </button>
+      </ion-buttons>
   </ion-navbar>
 </ion-header>
 
-
 <ion-content>
   <ion-slides style="height: 50vh">
-    <ion-slide>
+    <ion-slide *ngFor="let s of sources" >
       <ion-card>
-        <img src={{source}}>
+        <ion-item color="other" center>
+            <img style="height: 50vh; margin-left: auto; margin-right: auto; display: block;" src={{s}}>
+        </ion-item>
       </ion-card>
     </ion-slide>
   </ion-slides>
-  <p>{{status}}</p>
+    <ion-card padding>  
+        <p>Status: {{status}}</p>
+    </ion-card>
 </ion-content>

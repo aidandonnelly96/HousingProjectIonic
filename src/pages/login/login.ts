@@ -34,32 +34,33 @@ export class LoginPage {
   }
   
   loginUser(): void {
-  if (!this.loginForm.valid){
-    console.log(this.loginForm.value);
-  } else {
-    this.authProvider.loginUser(this.loginForm.value.email, this.loginForm.value.password)
-        .then( authData => {
-            this.events.publish("user:login");
-            this.loading.dismiss().then( () => {
-            this.navCtrl.setRoot(TabsPage);
-          });
-        }, error => {
-          this.loading.dismiss().then( () => {
-            let alert = this.alertCtrl.create({
-              message: error.message,
-              buttons: [
-                {
-                  text: "Ok",
-                  role: 'cancel'
-                }
-              ]
+      if (!this.loginForm.valid){
+        console.log(this.loginForm.value);
+      } else {
+        this.authProvider.loginUser(this.loginForm.value.email, this.loginForm.value.password)
+            .then( authData => {
+                this.events.publish("user:login");
+                this.loading.dismiss().then( () => {
+                //this.navCtrl.setRoot(TabsPage);
+                this.navCtrl.pop();
+              });
+            }, error => {
+              this.loading.dismiss().then( () => {
+                let alert = this.alertCtrl.create({
+                  message: error.message,
+                  buttons: [
+                    {
+                      text: "Ok",
+                      role: 'cancel'
+                    }
+                  ]
+                });
+                alert.present();
+              });
             });
-            alert.present();
-          });
-        });
-    this.loading = this.loadingCtrl.create();
-    this.loading.present();
-  }
+        this.loading = this.loadingCtrl.create();
+        this.loading.present();
+      }
 }
 goToRegister(){ 
   this.navCtrl.push(SignupPage); 

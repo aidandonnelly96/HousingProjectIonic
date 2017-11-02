@@ -15,19 +15,26 @@
 </ion-header>
 
 <ion-content>
+  <ion-refresher (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content
+      pullingIcon="arrow-dropdown"
+      pullingText="Pull to refresh"
+      refreshingSpinner="circles"
+      refreshingText="Refreshing...">
+    </ion-refresher-content>
+  </ion-refresher>
     <ion-list>
-        <ion-item-sliding #item *ngFor="let h of homes" >
-            <button ion-item (click)="goToHomeDetail(h.src, h.title, h.status)">
-                <ion-thumbnail item-start class="animate-in-primary">
-                    <img src={{h.src}}>
+        <ion-card #item *ngFor="let h of homes" >
+            <button ion-item (click)="goToHomeDetail(h.id, h.title, h.status)">
+                <ion-thumbnail item-start>
+                    <img src={{h.thumbnail.url}}>
                 </ion-thumbnail>
-                <h2><a>{{h.title}}</a></h2>
+                <h2 text-capitalize><a>{{h.title}}</a></h2>
                 <p>Status: {{h.status}}</p>
             </button>
-        </ion-item-sliding>
-         <hr>
+        </ion-card>
     </ion-list>
-    <ion-fab bottom right >
-       <button ion-fab (click)="presentModal()" color="secondary"><ion-icon name="home"></ion-icon></button>
+    <ion-fab bottom right>
+       <button ion-fab (click)="presentModal()" color="accent"><ion-icon name="home"></ion-icon></button>
     </ion-fab>
 </ion-content>

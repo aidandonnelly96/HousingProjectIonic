@@ -22,35 +22,54 @@
     <span ion-text color="primary">Photos</span>    
       
     <div class="spacer" style="height: 40px;"></div>
-    
-    <ion-slides style="height: 45vh">
-        <ion-slide *ngFor="let image of images">
-          <ion-card>
-            <img [src]="image.src"/>
-          </ion-card>
-        </ion-slide>
-    </ion-slides>
-    
-    <div class="spacer" style="height: 40px;"></div>
-    
-    <button ion-button block (click)="presentActionSheet()">Add Photos</button>
-    
-    <ion-list id="login-list3">
-        <ion-item>
-            <ion-label color="primary" floating>Title</ion-label>
-            <ion-input></ion-input>
-        </ion-item>
-        <ion-item>
-            <ion-label color="primary">Status</ion-label>
-            <ion-select interface="popover">
-              <ion-option selected>Suitable for living</ion-option>
-              <ion-option>Potential for renovation</ion-option>
-              <ion-option>Beyond renovation</ion-option>
-            </ion-select>
-        </ion-item>
-        <ion-item>
-            <ion-label color="primary" floating>Info</ion-label>
-            <ion-textarea maxlength="4" rows="3"></ion-textarea>
-        </ion-item>
-    </ion-list>
+    <form #form="ngForm" [formGroup]="homes" (ngSubmit)="postNewHome(form)" novalidate>
+        <ion-slides *ngIf="imageData.length > 0" style="height: 45vh">
+            <ion-slide *ngFor="let image of images">
+              <ion-card>
+                <img [src]="image.src"/>
+              </ion-card>
+            </ion-slide>
+        </ion-slides>
+
+        <div class="spacer" style="height: 40px;"></div>
+
+        <button ion-button block color="accent" (click)="presentActionSheet()" type="button" >Add Photos</button>
+
+        <ion-list>
+            <ion-item>
+                <ion-label color="primary" floating>Title</ion-label>
+                <ion-input formControlName="title"></ion-input>
+            </ion-item>
+            <ion-item>
+                <ion-label color="primary">Status</ion-label>
+                <ion-select interface="popover" formControlName="status">
+                  <ion-option selected="true">Suitable for tenants</ion-option>
+                  <ion-option>Potential for renovation</ion-option>
+                  <ion-option>Beyond renovation</ion-option>
+                </ion-select>
+            </ion-item>
+            <ion-item>
+                <ion-label color="primary">Building Type</ion-label>
+                <ion-select interface="popover" formControlName="buildingType">
+                  <ion-option selected="true">Semi detached </ion-option>
+                  <ion-option>Detached</ion-option>
+                  <ion-option>Terraced</ion-option>
+                  <ion-option>Apartment</ion-option>
+                  <ion-option>Other</ion-option>
+                </ion-select>
+            </ion-item>
+            <ion-item>
+                <ion-label color="primary">Property's windows boarded over?</ion-label>
+                <ion-select interface="popover" formControlName="windows">
+                  <ion-option selected="true">Yes </ion-option>
+                  <ion-option>No </ion-option>
+                </ion-select>
+            </ion-item>
+            <ion-item>
+                <ion-label color="primary" floating>Info</ion-label>
+                <ion-textarea maxlength="400" rows="3" formControlName="info"></ion-textarea>
+            </ion-item>
+            <button ion-button block color="accent" type="submit">Post</button>
+        </ion-list>
+    </form>
 </ion-content>

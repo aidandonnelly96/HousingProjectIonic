@@ -1,12 +1,4 @@
 {
-    "cordova-plugin-console": {
-        "source": {
-            "type": "registry",
-            "id": "cordova-plugin-console@1.0.5"
-        },
-        "is_top_level": true,
-        "variables": {}
-    },
     "cordova-plugin-device": {
         "source": {
             "type": "registry",
@@ -26,15 +18,7 @@
     "cordova-plugin-statusbar": {
         "source": {
             "type": "registry",
-            "id": "cordova-plugin-statusbar@2.2.1"
-        },
-        "is_top_level": true,
-        "variables": {}
-    },
-    "cordova-plugin-whitelist": {
-        "source": {
-            "type": "registry",
-            "id": "cordova-plugin-whitelist@1.3.1"
+            "id": "cordova-plugin-statusbar@^2.2.1"
         },
         "is_top_level": true,
         "variables": {}
@@ -113,6 +97,22 @@
             "id": "cordova-plugin-add-swift-support@1.7.0"
         },
         "is_top_level": false,
+        "variables": {}
+    },
+    "com.telerik.plugins.nativepagetransitions": {
+        "source": {
+            "type": "registry",
+            "id": "com.telerik.plugins.nativepagetransitions"
+        },
+        "is_top_level": true,
+        "variables": {}
+    },
+    "cordova-plugin-whitelist": {
+        "source": {
+            "type": "registry",
+            "id": "cordova-plugin-whitelist@1.3.2"
+        },
+        "is_top_level": true,
         "variables": {}
     }
 }

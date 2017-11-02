@@ -7,15 +7,15 @@
         "files": {}
     },
     "installed_plugins": {
+        "com.telerik.plugins.nativepagetransitions": {
+            "PACKAGE_NAME": "com.ionicframework.ionmapleaflet732649"
+        },
         "cordova-plugin-advanced-http": {
             "PACKAGE_NAME": "com.ionicframework.ionmapleaflet732649"
         },
         "cordova-plugin-camera": {
             "CAMERA_USAGE_DESCRIPTION": " ",
             "PHOTOLIBRARY_USAGE_DESCRIPTION": " ",
-            "PACKAGE_NAME": "com.ionicframework.ionmapleaflet732649"
-        },
-        "cordova-plugin-console": {
             "PACKAGE_NAME": "com.ionicframework.ionmapleaflet732649"
         },
         "cordova-plugin-device": {
@@ -38,10 +38,10 @@
         "cordova-plugin-statusbar": {
             "PACKAGE_NAME": "com.ionicframework.ionmapleaflet732649"
         },
-        "cordova-plugin-whitelist": {
+        "ionic-plugin-keyboard": {
             "PACKAGE_NAME": "com.ionicframework.ionmapleaflet732649"
         },
-        "ionic-plugin-keyboard": {
+        "cordova-plugin-whitelist": {
             "PACKAGE_NAME": "com.ionicframework.ionmapleaflet732649"
         }
     },

@@ -11,6 +11,20 @@
   <form [formGroup]="signupForm" (submit)="signupUser()" novalidate>
 
     <ion-item>
+      <ion-label floating>First Name</ion-label>
+      <ion-input formControlName="firstname" type="name"
+        [class.invalid]="!signupForm.controls.email.valid && blur">
+      </ion-input>
+    </ion-item>
+      
+    <ion-item>
+      <ion-label floating>Last Name</ion-label>
+      <ion-input formControlName="surname" type="name"
+        [class.invalid]="!signupForm.controls.email.valid && blur">
+      </ion-input>
+    </ion-item>
+      
+    <ion-item>
       <ion-label floating>Email</ion-label>
       <ion-input formControlName="email" type="email"
         [class.invalid]="!signupForm.controls.email.valid && blur">
@@ -25,7 +39,7 @@
     </ion-item>
 
     <button ion-button block type="submit" [disabled]="!signupForm.valid">
-      Create an Account
+      Create Account
     </button>
   </form>
 </ion-content>

@@ -2,6 +2,7 @@ import {Component, NgZone} from '@angular/core';
 import {ViewController, NavController} from 'ionic-angular';
 import { Geolocation } from '@ionic-native/geolocation';
 import { HTTP } from '@ionic-native/HTTP';
+import { DatabaseProvider } from '../../providers/database/database';
 
 import { NativeGeocoder, NativeGeocoderReverseResult, NativeGeocoderForwardResult } from '@ionic-native/native-geocoder';
 
@@ -21,16 +22,14 @@ export class AutocompletePage {
 
   service = new google.maps.places.AutocompleteService();
 
-  constructor (public viewCtrl: ViewController, private zone: NgZone, public navCtrl: NavController, private geolocation: Geolocation, private nativeGeocoder: NativeGeocoder) {
-    this.getLocation();
+  constructor (public viewCtrl: ViewController, private zone: NgZone, public navCtrl: NavController, private geolocation: Geolocation, private nativeGeocoder: NativeGeocoder, public db: DatabaseProvider ) {
+    this.coords = [
+                {lng: this.db.userLng, lat: this.db.userLat}
+             ];
     this.autocompleteItems = [];
     this.autocomplete = {
       query: ''
     };
-  }
-
-  dismiss() {
-    this.viewCtrl.dismiss();
   }
 
   chooseItem(item: any) {
@@ -52,17 +51,6 @@ export class AutocompletePage {
       });
     });
   }
- 
- getLocation(){
-        this.geolocation.getCurrentPosition().then((resp) => {
-             this.coords = [
-                {lng: resp.coords.longitude, lat: resp.coords.latitude}
-             ];
-             console.log(this.coords);
-        }).catch((error) => {
-          console.log('Error getting location', error);
-        });
- }
 
  geoCode(place: any){
    this.nativeGeocoder.forwardGeocode(place)

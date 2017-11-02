@@ -24,19 +24,15 @@ $font-path: "../assets/fonts";
 // The "primary" color is the only required color in the map.
 
 $colors: (
-  primary:    #009688,
-  secondary:  #FF1744,
+  primary:    #607D8B,
+  secondary:  #90A4AE,
+  accent:     #448AFF,
   danger:     #f53d3d,
   light:      #f4f4f4,
   dark:       #002b36,
+  other:      #455A64
 );
-/*$colors: (
-  primary:    #009688,
-  secondary:  #FF1744,
-  danger:     #f53d3d,
-  light:      #f4f4f4,
-  dark:       #002b36,
-);*/
+
 // App iOS Variables
 // --------------------------------------------------
 // iOS only Sass variables can go here
@@ -81,3 +77,7 @@ $colors: (
 
 @import "roboto";
 @import "noto-sans";
+
+
+// Material Design Popover
+// --------------------------------------------------
