@@ -20,6 +20,11 @@ import { ModalPage } from '../pages/modal/modal';
 import { HomeDetailPage } from '../pages/home-detail/home-detail';
 import { HomeDetailPopover } from '../pages/home-detail/home-detail';
 import { LoginPage } from '../pages/login/login';
+import { MypostsPage } from '../pages/myposts/myposts';
+import { FavouritesPage } from '../pages/favourites/favourites';
+import { DraftsPage } from '../pages/drafts/drafts';
+import { SettingsPage } from '../pages/settings/settings';
+import { AccountPage } from '../pages/account/account';
 import { FacetPage } from '../pages/facet/facet';
 import { Camera } from '@ionic-native/camera';
 import { AutocompletePage } from '../pages/autocomplete/autocomplete';
@@ -52,7 +57,12 @@ firebase.initializeApp({
     LoginPage,
     AutocompletePage,
     SignupPage,
+    AccountPage,
     FacetPage,
+    MypostsPage,
+    FavouritesPage,
+    DraftsPage,
+    SettingsPage,
     HomePage,
     TabsPage,
     MapPage
@@ -70,6 +80,11 @@ firebase.initializeApp({
     AutocompletePage,
     HomeDetailPopover,
     SignupPage,
+    MypostsPage,
+    FavouritesPage,
+    DraftsPage,
+    SettingsPage,
+    AccountPage,
     HomeDetailPage,
     HomePage,
     ModalPage,

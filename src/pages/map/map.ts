@@ -9,7 +9,7 @@ import { NativePageTransitions, NativeTransitionOptions } from '@ionic-native/na
 import { AuthProvider } from '../../providers/auth/auth';
 import { DatabaseProvider } from '../../providers/database/database';
 import { HomeDetailPage } from '../home-detail/home-detail';
-
+import { LoginPage } from '../login/login';
 
 import L from "leaflet";
 
@@ -33,7 +33,7 @@ export class MapPage {
   currentLatitude: number; 
   currentLongitude: number;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public modalCtrl: ModalController, private geolocation: Geolocation, private spinnerDialog: SpinnerDialog, private nativePageTransitions: NativePageTransitions, public events: Events, public db: DatabaseProvider) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public modalCtrl: ModalController, private geolocation: Geolocation, private spinnerDialog: SpinnerDialog, private nativePageTransitions: NativePageTransitions, public events: Events, public db: DatabaseProvider, public auth: AuthProvider) {
         events.subscribe('home:entered', (time) => {
             console.log("map home:entered");
             for(let marker of this.markers){
@@ -70,24 +70,6 @@ export class MapPage {
     //this.getCurrentLocation();
   }
 
-  ionViewWillLeave() {
-
-     let options: NativeTransitionOptions = {
-        direction: 'left',
-        duration: 500,
-        //slidePixels: 20,
-        //iosdelay: 100,
-        //androiddelay: 150,
-        fixedPixelsTop: 0,
-        fixedPixelsBottom: 55
-       };
-
-     this.nativePageTransitions.slide(options);
-       //.then(onSuccess)
-       //.catch(onError);
-
-  }
-
   initMap() {
     this.spinnerDialog.show();
     this.map = L.map('map', {
@@ -114,8 +96,13 @@ export class MapPage {
     });*/
   }
   presentModal(){
-    let modal = this.modalCtrl.create(ModalPage);
-    modal.present();
+    if(this.auth.getCurrentUser()!=null){
+        let modal = this.modalCtrl.create(ModalPage);
+        modal.present();
+    }
+    else{
+        this.navCtrl.push(LoginPage);
+    }
   }
   
   recenterMap(){

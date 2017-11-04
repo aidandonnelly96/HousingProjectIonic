@@ -30,7 +30,7 @@ export class FacetPage {
       place: ''
     };
     this.searchValue="";
-    this.distance =0;
+    this.distance =1;
     this.search = new FormGroup({
        distance: new FormControl(),
        buildingType: new FormControl(),
@@ -59,7 +59,6 @@ export class FacetPage {
     modal.present();
   }
   applyFilter() {
-       //console.log(this.search.value.distance);
      this.db.getRequestedHomes(Number(this.coords[0]), Number(this.coords[1]), parseInt(this.search.value.distance), this.search.value.buildingType, this.search.value.status);
      this.viewCtrl.dismiss();
   }

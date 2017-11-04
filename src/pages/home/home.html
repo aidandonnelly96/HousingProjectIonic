@@ -15,23 +15,29 @@
 </ion-header>
 
 <ion-content>
-  <ion-refresher (ionRefresh)="doRefresh($event)">
-    <ion-refresher-content
-      pullingIcon="arrow-dropdown"
-      pullingText="Pull to refresh"
-      refreshingSpinner="circles"
-      refreshingText="Refreshing...">
-    </ion-refresher-content>
-  </ion-refresher>
     <ion-list>
-        <ion-card #item *ngFor="let h of homes" >
-            <button ion-item (click)="goToHomeDetail(h.id, h.title, h.status)">
+        <ion-card #item *ngFor="let h of homes">
+        <ion-item-sliding #slidingItem *ngIf="auth.getCurrentUser()!=null" >
+            <button ion-item (click)="goToHomeDetail(h)">
                 <ion-thumbnail item-start>
                     <img src={{h.thumbnail.url}}>
                 </ion-thumbnail>
                 <h2 text-capitalize><a>{{h.title}}</a></h2>
                 <p>Status: {{h.status}}</p>
             </button>
+            <ion-item-options>
+                <button ion-button (click)="addToFavourites(h.id, slidingItem)" color="accent">
+                    Favorite
+                </button>
+            </ion-item-options>
+        </ion-item-sliding>
+        <button ion-item *ngIf="auth.getCurrentUser()==null" (click)="goToHomeDetail(h)">
+            <ion-thumbnail item-start>
+                <img src={{h.thumbnail.url}}>
+            </ion-thumbnail>
+            <h2 text-capitalize><a>{{h.title}}</a></h2>
+            <p>Status: {{h.status}}</p>
+        </button>
         </ion-card>
     </ion-list>
     <ion-fab bottom right>

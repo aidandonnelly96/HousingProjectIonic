@@ -1,11 +1,110 @@
 
+// Ionic Variables and Theming. For more info, please see:
+// http://ionicframework.com/docs/v2/theming/
+$font-path: "../assets/fonts";
 
-page-home-detail {
-    .custom-popover{
-        height: 20%;
-    }
-}
+@import "ionic.globals";
 
-.custom-popover{
-    height: 20%;
-}
+
+// Shared Variables
+// --------------------------------------------------
+// To customize the look and feel of this app, you can override
+// the Sass variables found in Ionic's source scss files.
+// To view all the possible Ionic variables, see:
+// http://ionicframework.com/docs/v2/theming/overriding-ionic-variables/
+
+
+
+
+// Named Color Variables
+// --------------------------------------------------
+// Named colors makes it easy to reuse colors on various components.
+// It's highly recommended to change the default colors
+// to match your app's branding. Ionic uses a Sass map of
+// colors so you can add, rename and remove colors as needed.
+// The "primary" color is the only required color in the map.
+
+$colors: (
+  primary:    #607D8B,
+  secondary:  #90A4AE,
+  accent:     #448AFF,
+  danger:     #f53d3d,
+  light:      #f4f4f4,
+  dark:       #002b36,
+  other:      #455A64
+);
+
+// App iOS Variables
+// --------------------------------------------------
+// iOS only Sass variables can go here
+
+
+
+
+// App Material Design Variables
+// --------------------------------------------------
+// Material Design only Sass variables can go here
+
+
+
+
+// App Windows Variables
+// --------------------------------------------------
+// Windows only Sass variables can go here
+
+
+
+
+// App Theme
+// --------------------------------------------------
+// Ionic apps can have different themes applied, which can
+// then be future customized. This import comes last
+// so that the above variables are used and Ionic's
+// default are overridden.
+
+@import "ionic.theme.default";
+
+
+// Ionicons
+// --------------------------------------------------
+// The premium icon font for Ionic. For more info, please see:
+// http://ionicframework.com/docs/v2/ionicons/
+
+@import "ionic.ionicons";
+
+
+// Fonts
+// --------------------------------------------------
+
+@import "roboto";
+@import "noto-sans";
+
+
+// Material Design Popover
+// --------------------------------------------------
+
+$popover-md-width:                     250px !default;
+
+/// @prop - Min width of the popover content
+$popover-md-min-width:                 0 !default;
+
+/// @prop - Minimum height of the popover content
+$popover-md-min-height:                0 !default;
+
+/// @prop - Maximum height of the popover content
+$popover-md-max-height:                20% !default;
+
+/// @prop - Border radius of the popover content
+$popover-md-border-radius:             2px !default;
+
+/// @prop - Text color of the popover content
+$popover-md-text-color:                $text-md-color !default;
+
+/// @prop - Background of the popover content
+$popover-md-background:                $background-md-color !default;
+
+/// @prop - Box shadow color of the popover content
+$popover-md-box-shadow-color:          rgba(0, 0, 0, .3) !default;
+
+/// @prop - Box shadow of the popover content
+$popover-md-box-shadow:                0 3px 12px 2px $popover-md-box-shadow-color !default;

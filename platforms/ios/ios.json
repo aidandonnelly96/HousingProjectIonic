@@ -63,6 +63,10 @@
                         {
                             "xml": "<feature name=\"Keyboard\"><param name=\"ios-package\" onload=\"true\" value=\"IonicKeyboard\" /></feature>",
                             "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"RequestLocationAccuracy\"><param name=\"ios-package\" value=\"RequestLocationAccuracy\" /></feature>",
+                            "count": 1
                         }
                     ]
                 }
@@ -144,6 +148,9 @@
             "PACKAGE_NAME": "com.ionicframework.ionmapleaflet732649"
         },
         "cordova-plugin-whitelist": {
+            "PACKAGE_NAME": "com.ionicframework.ionmapleaflet732649"
+        },
+        "cordova-plugin-request-location-accuracy": {
             "PACKAGE_NAME": "com.ionicframework.ionmapleaflet732649"
         }
     },
@@ -475,6 +482,14 @@
                 "cordova.plugins.Keyboard"
             ],
             "runs": true
+        },
+        {
+            "id": "cordova-plugin-request-location-accuracy.RequestLocationAccuracy",
+            "file": "plugins/cordova-plugin-request-location-accuracy/www/ios/RequestLocationAccuracy.js",
+            "pluginId": "cordova-plugin-request-location-accuracy",
+            "clobbers": [
+                "cordova.plugins.locationAccuracy"
+            ]
         }
     ],
     "plugin_metadata": {
@@ -491,6 +506,7 @@
         "cordova-plugin-splashscreen": "4.0.3",
         "cordova-plugin-statusbar": "2.2.1",
         "ionic-plugin-keyboard": "2.2.1",
-        "cordova-plugin-whitelist": "1.3.2"
+        "cordova-plugin-whitelist": "1.3.2",
+        "cordova-plugin-request-location-accuracy": "2.2.2"
     }
 }

@@ -28,8 +28,8 @@
           </ion-item>
           <ion-item-divider color="light"><ion-label>Distance: {{distance}}km</ion-label></ion-item-divider>
           <ion-item [formGroup]="search">
-            <ion-range formControlName="distance" min="0" max="100" [(ngModel)]="distance" color="primary">
-              <ion-label range-left>0km</ion-label>
+            <ion-range formControlName="distance" min="1" max="100" [(ngModel)]="distance" color="primary">
+              <ion-label range-left>1km</ion-label>
               <ion-label range-right>100km</ion-label>
             </ion-range>
           </ion-item>

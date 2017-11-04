@@ -8,6 +8,7 @@ import { HomePage } from '../pages/home/home'
 import { CameraPage } from '../pages/camera/camera'
 import { TabsPage } from '../pages/tabs/tabs';
 import { LoginPage } from '../pages/login/login';
+import { AccountPage } from '../pages/account/account';
 import { AuthProvider } from '../providers/auth/auth';
 import { DatabaseProvider } from '../providers/database/database';
 import { MenuController } from 'ionic-angular';
@@ -34,6 +35,7 @@ export class MyApp {
   login: Array<{component: any}>;
 
   constructor(platform: Platform, statusBar: StatusBar, public geolocation: Geolocation, splashScreen: SplashScreen, public authProvider: AuthProvider, public events: Events, private menu: MenuController, public alertCtrl: AlertController, public db: DatabaseProvider) {
+  
      this.status="Any";
      this.buildingType="Any";
      events.subscribe('home:entered', (time) => {
@@ -42,8 +44,7 @@ export class MyApp {
       });
      this.getHomesForCurrentLocation();
      this.pages = [
-            { title: 'My Account', component: CameraPage, icon: 'person' },
-            { title: 'My Homes', component: CameraPage, icon:  'home'},
+            { title: 'My Account', component: AccountPage, icon: 'person' },
             { title: 'Capture', component: CameraPage, icon: 'camera' }
      ];
      this.login = [
@@ -109,11 +110,13 @@ export class MyApp {
   
   getHomesForCurrentLocation(){
     this.geolocation.getCurrentPosition().then((resp) => {
+         console.log(resp.coords.latitude);
          this.db.userLat=resp.coords.latitude;
          this.db.userLng=resp.coords.longitude;
          console.log(this.db.userLat);
          this.db.getRequestedHomes(resp.coords.latitude, resp.coords.longitude, 5, this.buildingType, this.status);
     }).catch((error) => {
+         console.log(error);
          this.db.getRequestedHomes(53.3813572, -6.5940997, 5, this.buildingType, this.status);
     });
   }

@@ -18,12 +18,12 @@
 </ion-header>
 
 
-<ion-content padding>
-    <span ion-text color="primary">Photos</span>    
+<ion-content>
+    <ion-item-divider color="light">Photos</ion-item-divider>
       
     <div class="spacer" style="height: 40px;"></div>
     <form #form="ngForm" [formGroup]="homes" (ngSubmit)="postNewHome(form)" novalidate>
-        <ion-slides *ngIf="imageData.length > 0" style="height: 45vh">
+        <ion-slides *ngIf="images.length > 0" style="height: 45vh">
             <ion-slide *ngFor="let image of images">
               <ion-card>
                 <img [src]="image.src"/>
@@ -31,14 +31,22 @@
             </ion-slide>
         </ion-slides>
 
-        <div class="spacer" style="height: 40px;"></div>
+        <div class="spacer" *ngIf="images.length > 0" style="height: 40px;"></div>
 
-        <button ion-button block color="accent" (click)="presentActionSheet()" type="button" >Add Photos</button>
+        <button ion-button block color="primary" (click)="presentActionSheet()" type="button">Add Photos</button>
+        
+        <div class="spacer" style="height: 40px;"></div>
+        
+        <ion-item-divider color="light">Info</ion-item-divider>
 
         <ion-list>
             <ion-item>
                 <ion-label color="primary" floating>Title</ion-label>
                 <ion-input formControlName="title"></ion-input>
+            </ion-item>            
+            <ion-item>
+                <ion-label color="primary" floating>Address</ion-label>
+                <ion-input formControlName="address"></ion-input>
             </ion-item>
             <ion-item>
                 <ion-label color="primary">Status</ion-label>
@@ -51,7 +59,7 @@
             <ion-item>
                 <ion-label color="primary">Building Type</ion-label>
                 <ion-select interface="popover" formControlName="buildingType">
-                  <ion-option selected="true">Semi detached </ion-option>
+                  <ion-option selected="true">Semi detached</ion-option>
                   <ion-option>Detached</ion-option>
                   <ion-option>Terraced</ion-option>
                   <ion-option>Apartment</ion-option>
@@ -69,7 +77,8 @@
                 <ion-label color="primary" floating>Info</ion-label>
                 <ion-textarea maxlength="400" rows="3" formControlName="info"></ion-textarea>
             </ion-item>
-            <button ion-button block color="accent" type="submit">Post</button>
+            <div class="spacer" style="height: 20px;"></div>
+            <button ion-button block color="primary" type="submit"  [disabled]="!homes.valid || images.length==0">Post</button>
         </ion-list>
     </form>
 </ion-content>

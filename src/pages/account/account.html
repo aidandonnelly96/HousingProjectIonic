@@ -1,0 +1,13 @@
+<ion-header  no-border>
+    <ion-navbar color="primary">
+        <ion-title>
+            My Account
+        </ion-title>
+    </ion-navbar>
+</ion-header>
+<ion-tabs color="primary" tabsPlacement="top">
+    <ion-tab [root]="tab0Root" tabTitle="My Posts" label="My Posts" tabIcon="clipboard"></ion-tab>  
+    <ion-tab [root]="tab1Root" tabTitle="Favourites" label="Favourites" tabIcon="bookmark"></ion-tab>
+    <ion-tab [root]="tab2Root" tabTitle="Drafts" label="Drafts" tabIcon="create"></ion-tab>
+    <ion-tab [root]="tab3Root" tabTitle="Settings" label="Settings" tabIcon="settings"></ion-tab>
+</ion-tabs>

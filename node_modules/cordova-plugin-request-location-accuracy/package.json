@@ -1,0 +1,104 @@
+{
+  "_args": [
+    [
+      {
+        "raw": "cordova-plugin-request-location-accuracy",
+        "scope": null,
+        "escapedName": "cordova-plugin-request-location-accuracy",
+        "name": "cordova-plugin-request-location-accuracy",
+        "rawSpec": "",
+        "spec": "latest",
+        "type": "tag"
+      },
+      "/Users/aidandonnelly/Desktop/FINAL YEAR/HousingProject/node_modules"
+    ]
+  ],
+  "_from": "cordova-plugin-request-location-accuracy@latest",
+  "_id": "cordova-plugin-request-location-accuracy@2.2.2",
+  "_inCache": true,
+  "_location": "/cordova-plugin-request-location-accuracy",
+  "_nodeVersion": "7.10.0",
+  "_npmOperationalInternal": {
+    "host": "s3://npm-registry-packages",
+    "tmp": "tmp/cordova-plugin-request-location-accuracy-2.2.2.tgz_1504020107327_0.3603582384530455"
+  },
+  "_npmUser": {
+    "name": "davealden",
+    "email": "dave@workingedge.co.uk"
+  },
+  "_npmVersion": "4.2.0",
+  "_phantomChildren": {},
+  "_requested": {
+    "raw": "cordova-plugin-request-location-accuracy",
+    "scope": null,
+    "escapedName": "cordova-plugin-request-location-accuracy",
+    "name": "cordova-plugin-request-location-accuracy",
+    "rawSpec": "",
+    "spec": "latest",
+    "type": "tag"
+  },
+  "_requiredBy": [
+    "#USER",
+    "/"
+  ],
+  "_resolved": "https://registry.npmjs.org/cordova-plugin-request-location-accuracy/-/cordova-plugin-request-location-accuracy-2.2.2.tgz",
+  "_shasum": "0c6894348bdd4fa968d5d4c03cc0c815578be7c2",
+  "_shrinkwrap": null,
+  "_spec": "cordova-plugin-request-location-accuracy",
+  "_where": "/Users/aidandonnelly/Desktop/FINAL YEAR/HousingProject/node_modules",
+  "author": {
+    "name": "Dave Alden"
+  },
+  "bugs": {
+    "url": "https://github.com/dpa99c/cordova-plugin-request-location-accuracy/issues"
+  },
+  "cordova": {
+    "id": "cordova-plugin-request-location-accuracy",
+    "platforms": [
+      "android",
+      "ios"
+    ]
+  },
+  "cordova_name": "Request Location Accuracy",
+  "dependencies": {},
+  "description": "Cordova/Phonegap plugin for Android to request Location Accuracy mode via Google Play Services.",
+  "devDependencies": {},
+  "directories": {},
+  "dist": {
+    "shasum": "0c6894348bdd4fa968d5d4c03cc0c815578be7c2",
+    "tarball": "https://registry.npmjs.org/cordova-plugin-request-location-accuracy/-/cordova-plugin-request-location-accuracy-2.2.2.tgz"
+  },
+  "gitHead": "915b178faebd874f8a1a8b37c14590f7efb5b846",
+  "homepage": "https://github.com/dpa99c/cordova-plugin-request-location-accuracy#readme",
+  "issue": "https://github.com/dpa99c/cordova-plugin-request-location-accuracy/issues",
+  "keywords": [
+    "ecosystem:cordova",
+    "cordova",
+    "cordova-android",
+    "cordova-ios",
+    "phonegap",
+    "diagnostic",
+    "location",
+    "accuracy",
+    "high accuracy",
+    "fine accuracy",
+    "gps",
+    "settings"
+  ],
+  "license": "MIT",
+  "maintainers": [
+    {
+      "name": "davealden",
+      "email": "dave@workingedge.co.uk"
+    }
+  ],
+  "name": "cordova-plugin-request-location-accuracy",
+  "optionalDependencies": {},
+  "readme": "ERROR: No README data found!",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dpa99c/cordova-plugin-request-location-accuracy.git"
+  },
+  "scripts": {},
+  "version": "2.2.2"
+}

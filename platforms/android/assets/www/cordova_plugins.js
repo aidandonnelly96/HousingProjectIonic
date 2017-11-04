@@ -308,6 +308,14 @@ module.exports = [
         "clobbers": [
             "window.plugins.nativepagetransitions"
         ]
+    },
+    {
+        "id": "cordova-plugin-request-location-accuracy.RequestLocationAccuracy",
+        "file": "plugins/cordova-plugin-request-location-accuracy/www/android/RequestLocationAccuracy.js",
+        "pluginId": "cordova-plugin-request-location-accuracy",
+        "clobbers": [
+            "cordova.plugins.locationAccuracy"
+        ]
     }
 ];
 module.exports.metadata = 
@@ -325,7 +333,8 @@ module.exports.metadata =
     "cordova-plugin-advanced-http": "1.6.1",
     "cordova-plugin-nativegeocoder": "2.0.3",
     "com.telerik.plugins.nativepagetransitions": "0.6.5",
-    "cordova-plugin-whitelist": "1.3.2"
+    "cordova-plugin-whitelist": "1.3.2",
+    "cordova-plugin-request-location-accuracy": "2.2.2"
 };
 // BOTTOM OF METADATA
 });

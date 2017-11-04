@@ -6,7 +6,7 @@
 -->
 <ion-header>
   <ion-navbar color="primary">
-    <ion-title>{{title}}</ion-title>
+    <ion-title text-capitalize item item-text-wrap>{{title}}</ion-title>
       <ion-buttons right>
           <button ion-button (click)="presentPopover(event)">
             <ion-icon name="more"></ion-icon>
@@ -25,7 +25,61 @@
       </ion-card>
     </ion-slide>
   </ion-slides>
-    <ion-card padding>  
-        <p>Status: {{status}}</p>
+    <ion-card padding>
+        <ion-list no-lines>
+            <ion-item item-text-wrap>
+                <ion-title item-text-wrap text-capitalize>{{title}}</ion-title>
+            </ion-item>
+            <ion-item>
+                <ion-icon style="color: #90A4AE" name="pin" item-start></ion-icon>
+                <ion-label style="color: #90A4AE">{{address}}</ion-label>
+            </ion-item>
+            <ion-item>
+                <ion-icon style="color: #90A4AE" name="calendar" item-start></ion-icon>
+                <ion-label style="color: #90A4AE">{{posted}}</ion-label>
+            </ion-item>
+
+        </ion-list>
+    </ion-card>
+    
+    <ion-card>
+        <ion-row>
+            <ion-col>
+             <ion-item>
+                <p>Status</p>
+            </ion-item>
+            </ion-col>
+            <ion-col></ion-col>
+            <ion-col></ion-col>
+            <ion-col right text-right>
+            <ion-item>
+                <p style="color: black">{{status}}</p>
+            </ion-item>
+            </ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-col>
+             <ion-item>
+                <p>Property Type</p>
+            </ion-item>
+            </ion-col>
+            <ion-col></ion-col>
+            <ion-col></ion-col>
+            <ion-col right text-right>
+            <ion-item>
+                <p style="color: black">{{type}}</p>
+            </ion-item>
+            </ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-col>
+             <ion-item>
+                <p>Info</p>
+            </ion-item>
+            </ion-col>
+        </ion-row>
+
+                <p padding style="color: black" item item-text-wrap>{{info}}</p>
+
     </ion-card>
 </ion-content>

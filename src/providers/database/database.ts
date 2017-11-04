@@ -2,7 +2,8 @@ import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
 import { Geolocation } from '@ionic-native/geolocation';
-import { Events } from 'ionic-angular';
+import { Loading, LoadingController,  Events } from 'ionic-angular';
+import { AuthProvider } from '../../providers/auth/auth'
 
 
 import firebase from 'firebase';
@@ -26,8 +27,9 @@ export class DatabaseProvider {
   currentLong: number;
   userLat: number; 
   userLng: number;
+  loading: Loading;
 
-  constructor(public events: Events) {}
+  constructor(public events: Events, public auth: AuthProvider, public loadingCtrl: LoadingController) {}
 
 getRequestedHomes(currentLat, currentLong, radius, buildingType, status){
     this.homes = [];
@@ -53,37 +55,46 @@ getRequestedHomes(currentLat, currentLong, radius, buildingType, status){
         var query = firebase.database().ref('/homes').child(key);
         query.once('value')
              .then(snap => {
-                    console.log(snap.val().title);
+                if(snap.val().postStatus!="draft"){
                     if(status==undefined || status==snap.val().status || status=="Any" || status.length==0){
-                        console.log(snap.val().title+" passed status statement");
                         if(buildingType==undefined || buildingType==snap.val().buildingType || buildingType=="Any" || buildingType.length==0){
-                            console.log(snap.val().title+" passed BT statement");
-                            console.log("if statement");
                             me.homes.push(snap.val());
                             me.events.publish('new home', home, Date.now());
                             me.events.publish('home:entered',me.homes,Date.now());
                         }
                     }
+                }
         });
     });
     this.homes = me.homes;
     this.events.publish('home:entered',this.homes,Date.now());
 }
 
-postNewHome(title, info, status, buildingType, imageData) {
+postHome(title, address, info, status, buildingType, imageData, postStatus, key) {
+  this.loading = this.loadingCtrl.create();
+  this.loading.present();
   this.geoFire = new Geofire(firebase.database().ref('locations-ref'));
   var downloadURLs = [];
-
-  var newHomeKey = firebase.database().ref().child('homes').push().key;
+  var newHomeKey = "";
+  if(key==""){
+    newHomeKey = firebase.database().ref().child('homes').push().key;
+  }
+  else{
+    newHomeKey=key;
+  }
   
     var homeData = {
         id: newHomeKey,
         title: title,
+        address: address,
         status: status,
         buildingType: buildingType,
         info: info,
+        userID: this.auth.getCurrentUser().uid,
         lat: this.userLat,
-        long: this.userLng
+        long: this.userLng,
+        postStatus: postStatus,
+        posted: new Date().getTime()
     };
     var updates = {};
     var me = this;
@@ -91,30 +102,54 @@ postNewHome(title, info, status, buildingType, imageData) {
     firebase.database().ref().update(updates);
     
       for(let image of imageData){
-        console.log(imageData[0]);
-        (function (i){
-           var newImageKey = firebase.database().ref().child('homes').push().key;
-           console.log(newImageKey);
-           var imageRef = firebase.storage().ref('images/' + newHomeKey + '/' + newImageKey);
-           var uploadTask = imageRef.putString(image.data, 'base64', {contentType: 'image/png'});
-           uploadTask.on('state_changed', function(snapshot){
-            }, function(error) {
+        var promises=[];
+        if(image.state=="new"){
+            console.log(imageData[0]);
+            (function (i){
+               var newImageKey = firebase.database().ref().child('images').push().key;
+               console.log(newImageKey);
+               var imageRef = firebase.storage().ref('images/' + newHomeKey + '/' + newImageKey);
+               var uploadTask = imageRef.putString(i.data, 'base64', {contentType: 'image/jpg'});
+               uploadTask.on('state_changed', function(snapshot){
+                }, function(error) {
 
-            }, function() {
-                imageRef.getDownloadURL().then(function(url) {
-                    console.log(url);
-                    me.urls.push(url);
-                    firebase.database().ref('/homes/'+newHomeKey+'/thumbnail').set({url: me.urls[0]});
-                    return firebase.database().ref('/images/'+newImageKey).set({url: url, forHome: newHomeKey});
+                }, function() {
+                    promises.push(imageRef.getDownloadURL().then(function(url){
+                        console.log(url);
+                        me.urls.push(url);
+                        firebase.database().ref('/images/'+newImageKey).set({url: url, forHome: newHomeKey});
+                        return firebase.database().ref('/homes/'+newHomeKey+'/thumbnail').set({url: me.urls[0]});
+                    }));
+                    return Promise.all(promises).then(function(data){
+                        if(postStatus=="published"){
+                            me.geoFire.set(newHomeKey, [me.userLat, me.userLng]).then(function() {
+                                console.log("Provided key has been added to GeoFire");
+                                console.log(promises);
+                                me.loading.dismiss();
+                             }, function(error) {
+                                me.loading.dismiss();
+                                console.log("Error: " + error);
+                            })
+                        }
+                        else{
+                            me.loading.dismiss();
+                        }
+                    });
                 });
-            });
-        })(image);
+            })(image);
+            console.log(promises);
+        }
     }
-  
-    return this.geoFire.set(newHomeKey, [this.userLat, this.userLng]).then(function() {
-        console.log("Provided key has been added to GeoFire");
-    }, function(error) {
-      console.log("Error: " + error);
-    });
-    }
- }
+}
+    
+addToFavourites(homeID){
+        var newFavouriteKey = firebase.database().ref().child('favourites').push().key;
+        var favData = {
+            userID: this.auth.getCurrentUser().uid,
+            homeID: homeID,
+        };
+        var updates  = {};
+        updates['/favourites/' + newFavouriteKey] = favData;
+        firebase.database().ref().update(updates);
+}
+}

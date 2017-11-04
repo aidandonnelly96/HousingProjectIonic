@@ -1,0 +1,39 @@
+<!--
+  Generated template for the FavouritesPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header  no-border>
+    <ion-navbar color="primary">
+        <ion-title>
+            My Account
+        </ion-title>
+    </ion-navbar>
+</ion-header>
+
+<ion-content>
+    <ion-list>
+        <ion-card #item *ngFor="let h of homes">
+        <ion-item-sliding #slidingItem >
+            <button ion-item (click)="goToHomeDetail(h)">
+                <ion-thumbnail item-start>
+                    <img src={{h.thumbnail.url}}>
+                </ion-thumbnail>
+                <h2 text-capitalize><a>{{h.title}}</a></h2>
+                <p>Status: {{h.status}}</p>
+            </button>
+            <ion-item-options>
+                <button ion-button color="accent">
+                    <ion-icon name="create"></ion-icon>
+                    Edit
+                </button>
+                <button ion-button color="danger">
+                    <ion-icon name="trash"></ion-icon>
+                    Remove
+                </button>
+            </ion-item-options>
+        </ion-item-sliding>
+        </ion-card>
+    </ion-list>
+</ion-content>
