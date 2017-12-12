@@ -1,14 +1,14 @@
 webpackJsonp([0],{
 
-/***/ 445:
+/***/ 453:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(8);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__reset_password__ = __webpack_require__(448);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ResetPasswordPageModule", function() { return ResetPasswordPageModule; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__location_search__ = __webpack_require__(457);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "LocationSearchPageModule", function() { return LocationSearchPageModule; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -18,39 +18,36 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 
 
 
-var ResetPasswordPageModule = (function () {
-    function ResetPasswordPageModule() {
+var LocationSearchPageModule = (function () {
+    function LocationSearchPageModule() {
     }
-    return ResetPasswordPageModule;
+    return LocationSearchPageModule;
 }());
-ResetPasswordPageModule = __decorate([
+LocationSearchPageModule = __decorate([
     __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["a" /* NgModule */])({
         declarations: [
-            __WEBPACK_IMPORTED_MODULE_2__reset_password__["a" /* ResetPasswordPage */],
+            __WEBPACK_IMPORTED_MODULE_2__location_search__["a" /* LocationSearchPage */],
         ],
         imports: [
-            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* IonicPageModule */].forChild(__WEBPACK_IMPORTED_MODULE_2__reset_password__["a" /* ResetPasswordPage */]),
+            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* IonicPageModule */].forChild(__WEBPACK_IMPORTED_MODULE_2__location_search__["a" /* LocationSearchPage */]),
         ],
         exports: [
-            __WEBPACK_IMPORTED_MODULE_2__reset_password__["a" /* ResetPasswordPage */]
+            __WEBPACK_IMPORTED_MODULE_2__location_search__["a" /* LocationSearchPage */]
         ]
     })
-], ResetPasswordPageModule);
+], LocationSearchPageModule);
 
-//# sourceMappingURL=reset-password.module.js.map
+//# sourceMappingURL=location-search.module.js.map
 
 /***/ }),
 
-/***/ 448:
+/***/ 457:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(8);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_forms__ = __webpack_require__(16);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_auth_auth__ = __webpack_require__(26);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__validators_email__ = __webpack_require__(158);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ResetPasswordPage; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(7);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return LocationSearchPage; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -62,65 +59,56 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 
 
-
-
-
-var ResetPasswordPage = (function () {
-    function ResetPasswordPage(navCtrl, authProvider, formBuilder, alertCtrl) {
+/**
+ * Generated class for the LocationSearchPage page.
+ *
+ * See http://ionicframework.com/docs/components/#navigation for more info
+ * on Ionic pages and navigation.
+ */
+var LocationSearchPage = (function () {
+    function LocationSearchPage(navCtrl, navParams, viewCtrl) {
         this.navCtrl = navCtrl;
-        this.authProvider = authProvider;
-        this.formBuilder = formBuilder;
-        this.alertCtrl = alertCtrl;
-        this.resetPasswordForm = formBuilder.group({
-            email: ['',
-                __WEBPACK_IMPORTED_MODULE_2__angular_forms__["e" /* Validators */].compose([__WEBPACK_IMPORTED_MODULE_2__angular_forms__["e" /* Validators */].required, __WEBPACK_IMPORTED_MODULE_4__validators_email__["a" /* EmailValidator */].isValid])],
-        });
+        this.navParams = navParams;
+        this.viewCtrl = viewCtrl;
+        this.searchValue = "";
     }
-    ResetPasswordPage.prototype.resetPassword = function () {
-        var _this = this;
-        if (!this.resetPasswordForm.valid) {
-            console.log(this.resetPasswordForm.value);
-        }
-        else {
-            this.authProvider.resetPassword(this.resetPasswordForm.value.email)
-                .then(function (user) {
-                var alert = _this.alertCtrl.create({
-                    message: "We sent you a reset link to your email",
-                    buttons: [
-                        {
-                            text: "Ok",
-                            role: 'cancel',
-                            handler: function () { _this.navCtrl.pop(); }
-                        }
-                    ]
-                });
-                alert.present();
-            }, function (error) {
-                var errorMessage = error.message;
-                var errorAlert = _this.alertCtrl.create({
-                    message: errorMessage,
-                    buttons: [{ text: "Ok", role: 'cancel' }]
-                });
-                errorAlert.present();
-            });
-        }
+    LocationSearchPage.prototype.ionViewDidLoad = function () {
+        console.log('ionViewDidLoad LocationSearchPage');
     };
-    return ResetPasswordPage;
+    LocationSearchPage.prototype.ngOnInit = function () {
+        // get the two fields
+        var input_from = document.getElementById('journey_from').getElementsByTagName('input')[0];
+        // set the options
+        var options = {
+            types: []
+        };
+        // create the two autocompletes on the from and to fields
+        var autocomplete1 = new google.maps.places.Autocomplete(input_from, options);
+        // we need to save a reference to this as we lose it in the callbacks
+        var self = this;
+        // add the first listener
+        google.maps.event.addListener(autocomplete1, 'place_changed', function () {
+            var place = autocomplete1.getPlace();
+            var geometry = place.geometry;
+            if ((geometry) !== undefined) {
+                console.log(place.name);
+                console.log(geometry.location.lng());
+                console.log(geometry.location.lat());
+                console.log(place.types);
+            }
+        });
+    };
+    return LocationSearchPage;
 }());
-ResetPasswordPage = __decorate([
-    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* IonicPage */])({
-        name: 'reset-password'
-    }),
+LocationSearchPage = __decorate([
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* IonicPage */])(),
     __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_6" /* Component */])({
-        selector: 'page-reset-password',template:/*ion-inline-start:"/Users/aidandonnelly/Desktop/FINAL YEAR/HousingProject/src/pages/reset-password/reset-password.html"*/'<ion-content padding>\n  <form [formGroup]="resetPasswordForm" (submit)="resetPassword()" novalidate>\n\n    <ion-item>\n      <ion-label stacked>Email</ion-label>\n      <ion-input formControlName="email" type="email" placeholder="Your email address" \n        [class.invalid]="!resetPasswordForm.controls.email.valid && blur">\n      </ion-input>\n    </ion-item>\n\n    <button ion-button block type="submit" [disabled]="!resetPasswordForm.valid">\n      Reset your Password\n    </button>\n\n  </form>\n</ion-content>'/*ion-inline-end:"/Users/aidandonnelly/Desktop/FINAL YEAR/HousingProject/src/pages/reset-password/reset-password.html"*/,
+        selector: 'page-location-search',template:/*ion-inline-start:"/Users/aidandonnelly/Desktop/FINAL YEAR/HousingProject/src/pages/location-search/location-search.html"*/'<!--\n  Generated template for the LocationSearchPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n\n<ion-header>\n  <ion-navbar>\n         <ion-searchbar id="journey_from" name="journey_from" type="text" placeholder="Enter location" [(ngModel)]="fromValue" style="border:none; background-image: none;">\n         </ion-searchbar>\n  </ion-navbar>\n\n</ion-header>\n\n\n<ion-content padding>\n<ion-list>\n        <ion-card>\n          <ion-card-header>\n              <ion-list>\n                  <ion-item>\n                    <button ion-button full> <ion-icon name="navigate"></ion-icon>Current Location</button>\n                  </ion-item>\n              </ion-list>\n          </ion-card-header>\n        </ion-card>\n    </ion-list>\n</ion-content>\n'/*ion-inline-end:"/Users/aidandonnelly/Desktop/FINAL YEAR/HousingProject/src/pages/location-search/location-search.html"*/,
     }),
-    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavController */],
-        __WEBPACK_IMPORTED_MODULE_3__providers_auth_auth__["a" /* AuthProvider */],
-        __WEBPACK_IMPORTED_MODULE_2__angular_forms__["f" /* FormBuilder */],
-        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* AlertController */]])
-], ResetPasswordPage);
+    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* NavParams */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* ViewController */]])
+], LocationSearchPage);
 
-//# sourceMappingURL=reset-password.js.map
+//# sourceMappingURL=location-search.js.map
 
 /***/ })
 

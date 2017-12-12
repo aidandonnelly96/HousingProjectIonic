@@ -16,6 +16,7 @@
 
 <ion-content>
     <ion-list>
+        <ion-item-divider color="light">{{numHomes}} results</ion-item-divider>
         <ion-card #item *ngFor="let h of homes">
         <ion-item-sliding #slidingItem *ngIf="auth.getCurrentUser()!=null" >
             <button ion-item (click)="goToHomeDetail(h)">
@@ -26,8 +27,17 @@
                 <p>Status: {{h.status}}</p>
             </button>
             <ion-item-options>
-                <button ion-button (click)="addToFavourites(h.id, slidingItem)" color="accent">
-                    Favorite
+                <button *ngIf="auth.getCurrentUser().uid!=h.userID" ion-button (click)="addToFavourites(h.id, slidingItem)" color="accent">
+                    <ion-icon name="bookmark"></ion-icon>
+                    Bookmark
+                </button>
+                <button ion-button (click)="editHome(h, slidingItem)" color="accent">
+                    <ion-icon name="create"></ion-icon>
+                    Edit
+                </button>
+                <button *ngIf="auth.getCurrentUser().uid==h.userID" ion-button (click)="removeHome(h.id, slidingItem)" color="danger">
+                    <ion-icon name="trash"></ion-icon>
+                    Remove
                 </button>
             </ion-item-options>
         </ion-item-sliding>

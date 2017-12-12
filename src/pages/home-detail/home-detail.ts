@@ -1,8 +1,11 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { PopoverController, ViewController } from 'ionic-angular';
+import { PopoverController, ViewController, ModalController } from 'ionic-angular';
 import { NativePageTransitions, NativeTransitionOptions } from '@ionic-native/native-page-transitions';
 import { DatabaseProvider } from '../../providers/database/database';
+import { HistoryPage } from '../history/history';
+import { HomeDetailPopoverPage } from '../home-detail-popover/home-detail-popover';
+import { ModalPage } from '../modal/modal';
 
 import firebase from 'firebase';
 
@@ -19,25 +22,47 @@ import firebase from 'firebase';
 })
 export class HomeDetailPage {
     
+    public home: any;
     public title: string;
     public address: string;
     public type: string;
     public id: string;
     public info: string;
-    public posted: string;
     public status: string;
+    public garden: string;
+    public plumbing: string;
+    public roof: string;
+    public windows: string;
+    public rooms: string;
+    public estTime: string;
+    public estSize: string;
+    public electricity: string;
+    public furniture: string;
+    public relation: string;
+    public posted: string;
     sources = [];
 
     constructor(public navCtrl: NavController, public navParams: NavParams, public popoverCtrl: PopoverController, private nativePageTransitions: NativePageTransitions, public db: DatabaseProvider) {
         this.sources = [];
-        var home = navParams.get("home");
-        this.title = home.title;
-        this.id = home.id;
-        this.type = home.buildingType;
-        this.status = home.status;
-        this.address = home.address;
-        this.info = home.info;
-        var timePosted = home.posted;
+        this.home = navParams.get("home");
+        this.title = this.home.title;
+        this.address = this.home.address; 
+        this.status = this.home.status;
+        this.type = this.home.buildingType;
+        this.estSize = this.home.EstPropertySize;
+        this.estTime = this.home.timeLeftVacant;
+        this.electricity = this.home.electricity;
+        this.plumbing = this.home.plumbing;
+        this.windows = this.home.windows;
+        this.roof = this.home.roof;
+        this.garden = this.home.garden;
+        this.furniture = this.home.furniture;
+        this.rooms = this.home.rooms;
+        this.relation = this.home.usersRelation;
+        this.info = this.home.info;
+        this.id = this.home.id;
+
+        var timePosted = this.home.posted;
         var now= new Date().getTime();
         this.posted=this.msToTime(now-timePosted);
         this.getImageSourcesForThisHome();
@@ -46,24 +71,20 @@ export class HomeDetailPage {
     ionViewDidLoad() {
         console.log('ionViewDidLoad HomeDetailPage');
     }
-    
+     
     getImageSourcesForThisHome(){
         var imageSources = [];
-        var query = firebase.database().ref('/images');
-        var me = this;
+        var query=firebase.database().ref('/homes/'+this.id+'/images/');
+        var me=this;
         query.once('value')
-             .then(parentSnap => {
-                    parentSnap.forEach(function(snap)
+            .then(homeSnap => {
+                homeSnap.forEach(function(snap)
                     {
-                        console.log(snap.val().url);
-                        console.log(snap.val().forHome)
-                        console.log(me.id)
-                        if(snap.val().forHome==me.id){
-                            me.sources.push(snap.val().url);
-                        }
+                        me.sources.push(snap.val().url); 
                     })
-        });
+            });
     }
+    
     msToTime(s) {
       var ms = s % 1000;
       s = (s - ms) / 1000;
@@ -92,7 +113,10 @@ export class HomeDetailPage {
       }
     }
     presentPopover(myEvent) {
-        let popover = this.popoverCtrl.create(HomeDetailPopover);
+        let popover = this.popoverCtrl.create(HomeDetailPopoverPage, {
+            id: this.id,
+            home: this.home
+        });
         popover.present({
           ev : {
               target : {
@@ -106,22 +130,4 @@ export class HomeDetailPage {
             }
         });
     }
-}
-
-@Component({
-  template: `
-  <ion-content style="height: 20%" class="custom-popover">
-    <ion-list>
-      <button ion-item (click)="close()">Report</button>
-      <button ion-item (click)="close()">Edit</button>
-    </ion-list>
-    </ion-content>
-  `
-})
-export class HomeDetailPopover {
-  constructor(public viewCtrl: ViewController) {}
-
-  close() {
-    this.viewCtrl.dismiss();
-  }
 }

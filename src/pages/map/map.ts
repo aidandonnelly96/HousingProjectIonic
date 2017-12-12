@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
+import { App, NavController, NavParams, ActionSheetController } from 'ionic-angular';
 import { ModalController, ViewController, Events } from 'ionic-angular';
 import { ModalPage } from '../modal/modal';
 import { Geolocation } from '@ionic-native/geolocation';
@@ -12,6 +12,8 @@ import { HomeDetailPage } from '../home-detail/home-detail';
 import { LoginPage } from '../login/login';
 
 import L from "leaflet";
+import 'leaflet';
+import 'leaflet.markercluster';
 
 import firebase from 'firebase';
 
@@ -27,13 +29,17 @@ import firebase from 'firebase';
 })
 export class MapPage {
   homes = []; 
-  markers = [];
+  markers: any;
   map: L.Map;
   center: L.PointTuple;
   currentLatitude: number; 
   currentLongitude: number;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public modalCtrl: ModalController, private geolocation: Geolocation, private spinnerDialog: SpinnerDialog, private nativePageTransitions: NativePageTransitions, public events: Events, public db: DatabaseProvider, public auth: AuthProvider) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public modalCtrl: ModalController, private geolocation: Geolocation, private spinnerDialog: SpinnerDialog, private nativePageTransitions: NativePageTransitions, public events: Events, public db: DatabaseProvider, public auth: AuthProvider, public appCtrl: App, public actionSheetCtrl: ActionSheetController) {
+        this.markers=L.markerClusterGroup({
+            showCoverageOnHover: false
+        });
+        
         events.subscribe('home:entered', (time) => {
             console.log("map home:entered");
             for(let marker of this.markers){
@@ -45,29 +51,18 @@ export class MapPage {
               this.initMap();
             }
             this.recenterMap();
+            this.markers.clearLayers()
             for(let home of this.homes){
                 this.markLocations(home);
             }
       });
-      /*events.subscribe('new home', (home, time) => {
-            console.log("map new home");
-            if(this.map===undefined){
-                this.initMap();
-            }
-            this.markLocations(home);
-      });*/
   }
 
   ionViewDidLoad() {
+    if(this.map === undefined){
+      this.initMap();
+    }
     console.log('ionViewDidLoad MapPage');
-    
-    this.currentLatitude=53.3813572;
-    this.currentLongitude=-6.5940997;
-    
-    this.center = [this.currentLatitude, this.currentLongitude];
-    
-    //set map center
-    //this.getCurrentLocation();
   }
 
   initMap() {
@@ -76,28 +71,59 @@ export class MapPage {
       center: this.center,
       zoom: 13
     });
-    //Add OSM Layer
-    L.tileLayer("http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png").addTo(this.map);
+    L.tileLayer("http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+            attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+    }).addTo(this.map);
 
     this.spinnerDialog.hide();
   }
   
   markLocations(home){
-         var marker = L.marker([home.lat, home.long]).addTo(this.map)
-                                .bindPopup('<img src="'+home.thumbnail.url+'">'+home.title);
-         this.markers.push(marker);
+         var me=this;
+         this.map.removeLayer(this.markers);
+         var marker = L.marker([home.lat, home.long]);
+                                //.bindPopup('<img src="'+home.thumbnail.url+'"><h4 style="text-transform: capitalize;">'+home.title+'</h4>');
+         marker.on("click", function(e){
+            const actionSheet = me.actionSheetCtrl.create({
+                title: home.title,
+                buttons: [
+                    {
+                        icon: 'home',
+                        text: 'View Details',
+                        handler: () => {
+                            me.goToHomeDetail(home);
+                        }
+                    },
+                    {
+                        icon: 'bookmark',
+                        text: 'Bookmark',
+                        handler: () => {
+                            me.addToFavourites(home.id);
+                        }
+                    },
+                    {
+                        icon: 'create',
+                        text: 'Edit',
+                        handler: () => {
+                            me.editHome(home);
+                        }
+                    }
+                ]
+            });
+            actionSheet.present();
+         })
+         this.markers.addLayer(marker);
+         this.map.addLayer(this.markers);
   }
   
-  goToHomeDetail(homeTitle, homeStatus) {
-    console.log("running click");
-    /*this.navCtrl.push(HomeDetailPage, {
-        title: homeTitle,
-        status: homeStatus
-    });*/
+  goToHomeDetail(h) {
+        this.appCtrl.getRootNav().push(HomeDetailPage, {
+            home: h
+        });
   }
   presentModal(){
     if(this.auth.getCurrentUser()!=null){
-        let modal = this.modalCtrl.create(ModalPage);
+        let modal = this.modalCtrl.create( ModalPage );
         modal.present();
     }
     else{
@@ -111,6 +137,15 @@ export class MapPage {
   
   openFacet(){
     let modal = this.modalCtrl.create( FacetPage );
+    modal.present();
+  }
+  
+  addToFavourites(homeID){
+    this.db.addToFavourites(homeID);
+  }
+  
+  editHome(home){
+    let modal = this.modalCtrl.create(ModalPage, {draft: home});
     modal.present();
   }
 }

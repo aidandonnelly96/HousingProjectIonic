@@ -13,7 +13,7 @@
 </ion-header>
 
 <ion-content>
-    <ion-list>
+    <ion-list *ngIf="drafts.length!=0">
         <ion-card #item *ngFor="let d of drafts">
         <ion-item-sliding #slidingItem >
             <button ion-item (click)="editDraft(d)">
@@ -28,12 +28,21 @@
                     <ion-icon name="create" (click)="editDraft(d)"></ion-icon>
                     Edit
                 </button>
-                <button ion-button (click)="removeFromDrafts(d.id)" color="danger">
+                <button ion-button (click)="removeFromDrafts(d.id, slidingItem)" color="danger">
                     <ion-icon name="trash"></ion-icon>
                     Remove
                 </button>
             </ion-item-options>
         </ion-item-sliding>
         </ion-card>
+    </ion-list>
+    <ion-list *ngIf="drafts.length==0" padding>
+        <ion-item>
+            <ion-row>
+              <ion-col text-center>
+                  You haven't saved any drafts yet.
+              </ion-col>
+            </ion-row>
+        </ion-item>
     </ion-list>
 </ion-content>

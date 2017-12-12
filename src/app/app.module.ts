@@ -18,17 +18,21 @@ import { MapPage } from '../pages/map/map';
 import { CameraPage } from '../pages/camera/camera';
 import { ModalPage } from '../pages/modal/modal';
 import { HomeDetailPage } from '../pages/home-detail/home-detail';
-import { HomeDetailPopover } from '../pages/home-detail/home-detail';
+import { HistoryPage } from '../pages/history/history';
+import { HomeDetailPopoverPage } from '../pages/home-detail-popover/home-detail-popover'; 
 import { LoginPage } from '../pages/login/login';
 import { MypostsPage } from '../pages/myposts/myposts';
 import { FavouritesPage } from '../pages/favourites/favourites';
 import { DraftsPage } from '../pages/drafts/drafts';
 import { SettingsPage } from '../pages/settings/settings';
 import { AccountPage } from '../pages/account/account';
+import { ImagePickerPage } from '../pages/image-picker/image-picker';
+import { ResetPasswordPage } from '../pages/reset-password/reset-password';
 import { FacetPage } from '../pages/facet/facet';
 import { Camera } from '@ionic-native/camera';
 import { AutocompletePage } from '../pages/autocomplete/autocomplete';
 import { SignupPage } from '../pages/signup/signup';
+import { GalleryPage } from '../pages/gallery/gallery';
 
 
 import { SpinnerDialog } from '@ionic-native/spinner-dialog';
@@ -53,18 +57,22 @@ firebase.initializeApp({
     ModalPage,
     CameraPage,
     HomeDetailPage,
-    HomeDetailPopover,
+    HomeDetailPopoverPage,
     LoginPage,
     AutocompletePage,
     SignupPage,
     AccountPage,
+    ImagePickerPage,
+    ResetPasswordPage,
     FacetPage,
+    HistoryPage,
     MypostsPage,
     FavouritesPage,
     DraftsPage,
     SettingsPage,
     HomePage,
     TabsPage,
+    GalleryPage,
     MapPage
   ],
   imports: [
@@ -76,19 +84,23 @@ firebase.initializeApp({
     MyApp,
     LoginPage,
     FacetPage,
+    HistoryPage,
     CameraPage,
     AutocompletePage,
-    HomeDetailPopover,
+    ImagePickerPage,
+    HomeDetailPopoverPage,
     SignupPage,
     MypostsPage,
     FavouritesPage,
     DraftsPage,
     SettingsPage,
     AccountPage,
+    ResetPasswordPage,
     HomeDetailPage,
     HomePage,
     ModalPage,
     TabsPage,
+    GalleryPage,
     MapPage
   ],
   providers: [

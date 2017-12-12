@@ -5,6 +5,7 @@ import { FavouritesPage } from '../../pages/favourites/favourites';
 import { SettingsPage } from '../../pages/settings/settings';
 import { HomeDetailPage } from '../home-detail/home-detail';
 import { DraftsPage } from '../drafts/drafts';
+import { AuthProvider } from '../../providers/auth/auth'
 
 /**
  * Generated class for the AccountPage page.
@@ -23,7 +24,9 @@ export class AccountPage {
   tab1Root: any = FavouritesPage;
   tab2Root: any = DraftsPage;
   tab3Root: any = SettingsPage;
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  displayName: string;
+  constructor(public navCtrl: NavController, public navParams: NavParams, public auth: AuthProvider) {
+        this.displayName = this.auth.getCurrentUser().displayName;
   }
 
   ionViewDidLoad() {

@@ -1,65 +1,150 @@
 <!--
-  Generated template for the FacetPage page.
-
-  See http://ionicframework.com/docs/components/#navigation for more info on
-  Ionic pages and navigation.
--->
+   Generated template for the FacetPage page.
+   
+   See http://ionicframework.com/docs/components/#navigation for more info on
+   Ionic pages and navigation.
+   -->
 <ion-header>
-  <ion-navbar color="primary">
-    <ion-title>Search</ion-title>
+   <ion-navbar color="primary">
+      <ion-title center>Search</ion-title>
       <ion-buttons right>
-          <button (click)="closeFacet()" ion-button >
-              <span ion-text>Cancel</span>
-          </button>
+         <button (click)="closeFacet()" ion-button >
+            <span ion-text>Cancel</span>
+         </button>
       </ion-buttons>
-  </ion-navbar>
+   </ion-navbar>
 </ion-header>
-
-
 <ion-content>
-    <!--<form #form="ngForm" [formGroup]="search" novalidate>-->
-    <form #form="ngForm" [formGroup]="search" (ngSubmit)="applyFilter()" novalidate>
-        <ion-list id="search-list">
-          <ion-item-divider color="light">Location</ion-item-divider>
-          <ion-item [formGroup]="search">
-              <ion-searchbar (click)="showAddressModal()" [(ngModel)]="address.place"type="text" placeholder="Location" formControlName="location">
-                  <ion-icon name="compass"></ion-icon>
-              </ion-searchbar>
-          </ion-item>
-          <ion-item-divider color="light"><ion-label>Distance: {{distance}}km</ion-label></ion-item-divider>
-          <ion-item [formGroup]="search">
-            <ion-range formControlName="distance" min="1" max="100" [(ngModel)]="distance" color="primary">
-              <ion-label range-left>1km</ion-label>
-              <ion-label range-right>100km</ion-label>
+   <form #form="ngForm" [formGroup]="search" (ngSubmit)="applyFilter()" novalidate>
+   <ion-list id="search-list">
+      <ion-item-divider color="light">Location</ion-item-divider>
+      <ion-item [formGroup]="search">
+         <ion-searchbar (click)="showAddressModal()" [(ngModel)]="address.place"type="text" placeholder="Location" formControlName="location">
+         <ion-icon name="compass"></ion-icon>
+         </ion-searchbar>
+      </ion-item>
+      <ion-item-divider color="light">
+         <ion-label>Distance: {{distance}}km</ion-label>
+      </ion-item-divider>
+      <ion-item [formGroup]="search">
+         <ion-range formControlName="distance" min="1" max="10" [(ngModel)]="distance" color="primary">
+         <ion-label range-left>1km</ion-label>
+         <ion-label range-right>10km</ion-label>
+         </ion-range>
+      </ion-item>
+      <ion-item-divider color="light">General info</ion-item-divider>
+      <ion-row>
+         <ion-item>
+            <ion-label color="primary" left>Estimated Size: {{size.lower}} - {{size.upper}}  Sq. Metres</ion-label>
+            <ion-range dualKnobs="true" formControlName="size" min="500" max="10000" color="primary" [(ngModel)]="size" step="10" snaps="true">
             </ion-range>
-          </ion-item>
-          <ion-item-divider color="light">General info</ion-item-divider>
-          <ion-row>
-                <ion-col>
-                    <ion-item [formGroup]="search">
-                        <ion-label color="primary">Building type</ion-label>
-                        <ion-select interface="popover" formControlName="buildingType">
-                          <ion-option selected>Any</ion-option>
-                          <ion-option>House</ion-option>
-                          <ion-option>Apartment</ion-option>
-                          <ion-option>Other</ion-option>
-                        </ion-select>
-                    </ion-item>
-                </ion-col>
-                <ion-col>
-                    <ion-item [formGroup]="search">
-                        <ion-label color="primary">Building status</ion-label>
-                        <ion-select interface="popover" formControlName="status">
-                          <ion-option selected>Any</ion-option>
-                          <ion-option>Suitable for tenants</ion-option>
-                          <ion-option>Potential for renovation</ion-option>
-                          <ion-option>Beyond renovation</ion-option>
-                        </ion-select>
-                    </ion-item>
-                </ion-col>
-          </ion-row>
-          <!--<button ion-button full (click)="applyFilter()">Apply</button>-->
-          <button ion-button full type="submit">Apply</button>
-      </ion-list>
-    </form>
+         </ion-item>
+      </ion-row>
+      <ion-row>
+         <ion-col>
+            <ion-item [formGroup]="search">
+               <ion-label color="primary">Building type</ion-label>
+               <ion-select interface="popover" formControlName="buildingType">
+                  <ion-option selected>Any</ion-option>
+                  <ion-option>Semi detached</ion-option>
+                  <ion-option>Detached</ion-option>
+                  <ion-option>Terraced</ion-option>
+                  <ion-option>Apartment</ion-option>
+                  <ion-option>Other</ion-option>
+               </ion-select>
+            </ion-item>
+            <ion-item>
+               <ion-label color="primary">Estimated time left vacant</ion-label>
+               <ion-select formControlName="time" interface="popover">
+                  <ion-option selected="true">Any</ion-option>
+                  <ion-option value="1m">1 month or less</ion-option>
+                  <ion-option value="6m">1-6 months</ion-option>
+                  <ion-option value="1y">6 months to 1 year</ion-option>
+                  <ion-option value="My">1 year or more</ion-option>
+               </ion-select>
+            </ion-item>
+            <ion-item>
+               <ion-label color="primary">Furniture</ion-label>
+               <ion-select interface="popover" formControlName="furniture">
+                  <ion-option selected="true">Any</ion-option>
+                  <ion-option>Fully furnished</ion-option>
+                  <ion-option>Partially furnished</ion-option>
+                  <ion-option>Not furnished</ion-option>
+               </ion-select>
+            </ion-item>
+            <ion-item>
+               <ion-label color="primary">Rooms</ion-label>
+               <ion-select interface="popover" formControlName="rooms">
+                  <ion-option selected="true">Any</ion-option>
+                  <ion-option>1</ion-option>
+                  <ion-option>2</ion-option>
+                  <ion-option>3</ion-option>
+                  <ion-option>4</ion-option>
+                  <ion-option>5</ion-option>
+                  <ion-option>6</ion-option>
+                  <ion-option>7</ion-option>
+                  <ion-option>8</ion-option>
+                  <ion-option>9</ion-option>
+                  <ion-option>10+</ion-option>
+               </ion-select>
+            </ion-item>
+            <ion-item>
+               <ion-label color="primary">Roof</ion-label>
+               <ion-select interface="popover" formControlName="roof">
+                  <ion-option selected="true">Any</ion-option>
+                  <ion-option>Good condition</ion-option>
+                  <ion-option>Poor condition</ion-option>
+               </ion-select>
+            </ion-item>
+         </ion-col>
+         <ion-col>
+            <ion-item [formGroup]="search">
+               <ion-label color="primary">Building status</ion-label>
+               <ion-select interface="popover" formControlName="status">
+                  <ion-option selected>Any</ion-option>
+                  <ion-option>Suitable for tenants</ion-option>
+                  <ion-option>Potential for renovation</ion-option>
+                  <ion-option>Beyond renovation</ion-option>
+               </ion-select>
+            </ion-item>
+            <ion-item>
+               <ion-label color="primary">Electricity</ion-label>
+               <ion-select formControlName="electricity" interface="popover">
+                  <ion-option selected="true">Any</ion-option>
+                  <ion-option value="w">In working order</ion-option>
+                  <ion-option value="dw">Work required</ion-option>
+               </ion-select>
+            </ion-item>
+            <ion-item>
+               <ion-label color="primary">Plumbing</ion-label>
+               <ion-select formControlName="plumbing" interface="popover">
+                  <ion-option selected="true">Any</ion-option>
+                  <ion-option value="w">In working order</ion-option>
+                  <ion-option value="dw">Work required</ion-option>
+               </ion-select>
+            </ion-item>
+            <ion-item>
+               <ion-label color="primary">Garden</ion-label>
+               <ion-select interface="popover" formControlName="garden">
+                  <ion-option selected="true">Any</ion-option>
+                  <ion-option>Good condition</ion-option>
+                  <ion-option>Poor condition</ion-option>
+                  <ion-option>Obstructed</ion-option>
+               </ion-select>
+            </ion-item>
+            <ion-item>
+               <ion-label color="primary">Windows</ion-label>
+               <ion-select interface="popover" formControlName="windows">
+                  <ion-option selected="true">Any</ion-option>
+                  <ion-option>Good condition</ion-option>
+                  <ion-option>Damaged</ion-option>
+                  <ion-option>Boarded over</ion-option>
+               </ion-select>
+            </ion-item>
+         </ion-col>
+      </ion-row>
+      <!--<button ion-button full (click)="applyFilter()">Apply</button>-->
+      <button ion-button full type="submit">Apply</button>
+   </ion-list>
+   </form>
 </ion-content>

@@ -25,17 +25,33 @@ export class FacetPage {
     fromValue:string;
     
     private distance;
+    private size;
+    
   constructor(public navCtrl: NavController, public navParams: NavParams, public modalCtrl: ModalController, public viewCtrl: ViewController, public db: DatabaseProvider, private formBuilder: FormBuilder) {
     this.address = {
       place: ''
     };
     this.searchValue="";
     this.distance =1;
-    this.search = new FormGroup({
-       distance: new FormControl(),
-       buildingType: new FormControl(),
-       location: new FormControl(),
-       status: new FormControl()
+    this.size = { lower: 500,
+                 upper: 10000 };
+    this.search = this.formBuilder.group({
+        distance: [''],
+        buildingType: ['Any'],
+        location: [''],
+        status: ['Any'],
+        info: ['Any'],
+        size: [''],
+        time: ['Any'],
+        room: ['Any'],
+        windows: ['Any'],
+        rooms: ['Any'],
+        furniture: ['Any'],
+        electricity: ['Any'],
+        plumbing: ['Any'],
+        roof: ['Any'],
+        garden: ['Any'],
+        user: ['Any']
     });
   }
 
@@ -59,7 +75,7 @@ export class FacetPage {
     modal.present();
   }
   applyFilter() {
-     this.db.getRequestedHomes(Number(this.coords[0]), Number(this.coords[1]), parseInt(this.search.value.distance), this.search.value.buildingType, this.search.value.status);
+     this.db.getRequestedHomes(Number(this.coords[0]), Number(this.coords[1]), parseInt(this.search.value.distance), this.search.value.size.lower, this.search.value.size.upper,  this.search.value.status, this.search.value.time, this.search.value.buildingType, this.search.value.electricity, this.search.value.plumbing, this.search.value.furniture, this.search.value.rooms, this.search.value.roof, this.search.value.garden, this.search.value.windows);
      this.viewCtrl.dismiss();
   }
 }

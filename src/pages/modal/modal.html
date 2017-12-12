@@ -7,14 +7,13 @@
 <ion-header>
 
   <ion-navbar color="primary">
-      <ion-buttons right>
-          <button (click)="closemodal()" ion-button >
-              <span ion-text>Cancel</span>
-          </button>
-      </ion-buttons>
     <ion-title>Post</ion-title>
+  <ion-buttons right>
+     <button (click)="closeModal()" ion-button >
+     <span ion-text>Cancel</span>
+     </button>
+  </ion-buttons>
   </ion-navbar>
-
 </ion-header>
 
 
@@ -67,14 +66,91 @@
                 </ion-select>
             </ion-item>
             <ion-item>
-                <ion-label color="primary">Property's windows boarded over?</ion-label>
+                <ion-label color="primary" left>Estimated Size: {{size}} Sq. Metres</ion-label>
+                <ion-range formControlName="size" min="500" max="10000" color="primary" [(ngModel)]="size">
+                </ion-range>
+            </ion-item>
+            <ion-item>
+              <ion-label color="primary">Estimated time left vacant</ion-label>
+              <ion-select formControlName="time" interface="popover">
+                <ion-option>1 month or less</ion-option>
+                <ion-option>1-6 months</ion-option>
+                <ion-option>6 months to 1 year</ion-option>
+                <ion-option>1 year or more</ion-option>
+              </ion-select>
+            </ion-item>
+            <ion-item>
+              <ion-label color="primary">Electricity</ion-label>
+              <ion-select formControlName="electricity" interface="popover">
+                <ion-option>N/A</ion-option>
+                <ion-option>In working order</ion-option>
+                <ion-option>Work required</ion-option>
+              </ion-select>
+            </ion-item>
+            <ion-item>
+              <ion-label color="primary">Plumbing</ion-label>
+              <ion-select formControlName="plumbing" interface="popover">
+                <ion-option>N/A</ion-option>
+                <ion-option>In working order</ion-option>
+                <ion-option>Work required</ion-option>
+              </ion-select>
+            </ion-item>
+            <ion-item>
+                <ion-label color="primary">Windows</ion-label>
                 <ion-select interface="popover" formControlName="windows">
-                  <ion-option selected="true">Yes </ion-option>
-                  <ion-option>No </ion-option>
+                  <ion-option selected="true">Good condition</ion-option>
+                  <ion-option>Damaged</ion-option>
+                  <ion-option>Boarded over</ion-option>
                 </ion-select>
             </ion-item>
             <ion-item>
-                <ion-label color="primary" floating>Info</ion-label>
+                <ion-label color="primary">Roof</ion-label>
+                <ion-select interface="popover" formControlName="roof">
+                  <ion-option selected="true">Good condition</ion-option>
+                  <ion-option>Poor condition</ion-option>
+                </ion-select>
+            </ion-item>
+            <ion-item>
+                <ion-label color="primary">Garden</ion-label>
+                <ion-select interface="popover" formControlName="garden">
+                  <ion-option selected="true">Good condition</ion-option>
+                  <ion-option>Poor condition</ion-option>
+                  <ion-option>Obstructed</ion-option>
+                </ion-select>
+            </ion-item>
+            <ion-item>
+                <ion-label color="primary">Furniture</ion-label>
+                <ion-select interface="popover" formControlName="furniture">
+                  <ion-option selected="true">Fully furnished</ion-option>
+                  <ion-option>Partially furnished</ion-option>
+                  <ion-option>Not furnished</ion-option>
+                </ion-select>
+            </ion-item>
+            <ion-item>
+                <ion-label color="primary">Rooms</ion-label>
+                <ion-select interface="popover" formControlName="rooms">
+                  <ion-option selected="true">1</ion-option>
+                  <ion-option>2</ion-option>
+                  <ion-option>3</ion-option>
+                  <ion-option>4</ion-option>
+                  <ion-option>5</ion-option>
+                  <ion-option>6</ion-option>
+                  <ion-option>7</ion-option>
+                  <ion-option>8</ion-option>
+                  <ion-option>9</ion-option>
+                  <ion-option>10+</ion-option>
+                </ion-select>
+            </ion-item>
+            <ion-item>
+                <ion-label color="primary">Your relation to property</ion-label>
+                <ion-select interface="popover" formControlName="user">
+                  <ion-option selected="true">I am the owner</ion-option>
+                  <ion-option>I know the owner</ion-option>
+                  <ion-option>I live in the area</ion-option>
+                </ion-select>
+            </ion-item>
+            <ion-item>
+                <ion-label color="primary" floating>More info</ion-label>
                 <ion-textarea maxlength="400" rows="3" formControlName="info"></ion-textarea>
             </ion-item>
             <div class="spacer" style="height: 20px;"></div>

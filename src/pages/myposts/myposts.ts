@@ -29,8 +29,23 @@ export class MypostsPage {
     ionViewDidLoad() {
         console.log('ionViewDidLoad MypostsPage');
     }
-    getPostsByUserID(uid){
+    /*getPostsByUserID(uid){
         var query = firebase.database().ref('/homes');
+        var me = this;
+        query.once('value')
+             .then(parentSnap => {
+                    parentSnap.forEach(function(snap)
+                    {
+                        if(snap.val().userID==uid){
+                            if(snap.val().postStatus!="draft"){
+                                me.homes.push(snap.val());
+                            }
+                        }
+                    })
+        });
+    }*/
+    getPostsByUserID(uid){
+        var query = firebase.database().ref('/homes').orderByChild("userID").equalTo(uid);
         var me = this;
         query.once('value')
              .then(parentSnap => {

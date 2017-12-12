@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { App, IonicPage, NavController, NavParams } from 'ionic-angular';
+import { App, IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
 import { AuthProvider } from '../../providers/auth/auth'
 import { DatabaseProvider } from '../../providers/database/database';
 import { HomeDetailPage } from '../home-detail/home-detail';
@@ -23,7 +23,7 @@ export class DraftsPage {
 
     drafts=[];
 
-    constructor(public navCtrl: NavController, public navParams: NavParams, public auth: AuthProvider, public db: DatabaseProvider, public modalCtrl: ModalController, public appCtrl: App) {
+    constructor(public navCtrl: NavController, public navParams: NavParams, public auth: AuthProvider, public db: DatabaseProvider, public modalCtrl: ModalController, public appCtrl: App, public alertCtrl: AlertController) {
         this.getDraftsByUserID(this.auth.getCurrentUser().uid);
     }
 
@@ -49,8 +49,26 @@ export class DraftsPage {
         let modal = this.modalCtrl.create(ModalPage, {draft: draft});
         modal.present();
     }
-    removeFromDrafts(id){ 
-        firebase.database().ref('/homes/'+id).remove();
+    removeFromDrafts(id, slidingItem){ 
+        slidingItem.close();
+        let alert = this.alertCtrl.create({
+            title: 'Are you sure?',
+            message: 'Are you sure you want to remove this home from your drafts?',
+            buttons: [
+              {
+                text: 'Cancel',
+                role: 'cancel',
+                handler: () => {}
+              },
+              {
+                text: 'Remove',
+                handler: () => {
+                    this.db.removeHome(id);
+                }
+              }
+            ]
+        });
+        alert.present();
     }
 
 }

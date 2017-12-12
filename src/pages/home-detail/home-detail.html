@@ -8,13 +8,12 @@
   <ion-navbar color="primary">
     <ion-title text-capitalize item item-text-wrap>{{title}}</ion-title>
       <ion-buttons right>
-          <button ion-button (click)="presentPopover(event)">
+          <button *ngIf="this.home.postStatus=='published'" ion-button (click)="presentPopover(event)">
             <ion-icon name="more"></ion-icon>
           </button>
       </ion-buttons>
   </ion-navbar>
 </ion-header>
-
 <ion-content>
   <ion-slides style="height: 50vh">
     <ion-slide *ngFor="let s of sources" >
@@ -71,6 +70,146 @@
             </ion-item>
             </ion-col>
         </ion-row>
+                <ion-row>
+            <ion-col>
+             <ion-item>
+                <p>Estimated size</p>
+            </ion-item>
+            </ion-col>
+            <ion-col></ion-col>
+            <ion-col></ion-col>
+            <ion-col right text-right>
+            <ion-item>
+                <p style="color: black">{{estSize}} Sq. Metres</p>
+            </ion-item>
+            </ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-col>
+             <ion-item>
+                <p>Estimated time left vacant</p>
+            </ion-item>
+            </ion-col>
+            <ion-col></ion-col>
+            <ion-col></ion-col>
+            <ion-col right text-right>
+            <ion-item>
+                <p style="color: black">{{estTime}}</p>
+            </ion-item>
+            </ion-col>
+        </ion-row>
+                <ion-row>
+            <ion-col>
+             <ion-item>
+                <p>Electricity</p>
+            </ion-item>
+            </ion-col>
+            <ion-col></ion-col>
+            <ion-col></ion-col>
+            <ion-col right text-right>
+            <ion-item>
+                <p style="color: black">{{electricity}}</p>
+            </ion-item>
+            </ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-col>
+             <ion-item>
+                <p>Plumbing</p>
+            </ion-item>
+            </ion-col>
+            <ion-col></ion-col>
+            <ion-col></ion-col>
+            <ion-col right text-right>
+            <ion-item>
+                <p style="color: black">{{plumbing}}</p>
+            </ion-item>
+            </ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-col>
+             <ion-item>
+                <p>Windows</p>
+            </ion-item>
+            </ion-col>
+            <ion-col></ion-col>
+            <ion-col></ion-col>
+            <ion-col right text-right>
+            <ion-item>
+                <p style="color: black">{{windows}}</p>
+            </ion-item>
+            </ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-col>
+             <ion-item>
+                <p>Roof</p>
+            </ion-item>
+            </ion-col>
+            <ion-col></ion-col>
+            <ion-col></ion-col>
+            <ion-col right text-right>
+            <ion-item>
+                <p style="color: black">{{roof}}</p>
+            </ion-item>
+            </ion-col>
+        </ion-row>
+                <ion-row>
+            <ion-col>
+             <ion-item>
+                <p>Garden</p>
+            </ion-item>
+            </ion-col>
+            <ion-col></ion-col>
+            <ion-col></ion-col>
+            <ion-col right text-right>
+            <ion-item>
+                <p style="color: black">{{garden}}</p>
+            </ion-item>
+            </ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-col>
+             <ion-item>
+                <p>Furniture</p>
+            </ion-item>
+            </ion-col>
+            <ion-col></ion-col>
+            <ion-col></ion-col>
+            <ion-col right text-right>
+            <ion-item>
+                <p style="color: black">{{furniture}}</p>
+            </ion-item>
+            </ion-col>
+        </ion-row>
+                <ion-row>
+            <ion-col>
+             <ion-item>
+                <p>Rooms</p>
+            </ion-item>
+            </ion-col>
+            <ion-col></ion-col>
+            <ion-col></ion-col>
+            <ion-col right text-right>
+            <ion-item>
+                <p style="color: black">{{rooms}}</p>
+            </ion-item>
+            </ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-col>
+             <ion-item>
+                <p>Reporter's relation to property</p>
+            </ion-item>
+            </ion-col>
+            <ion-col></ion-col>
+            <ion-col></ion-col>
+            <ion-col right text-right>
+            <ion-item>
+                <p style="color: black">{{relation}}</p>
+            </ion-item>
+            </ion-col>
+        </ion-row>
         <ion-row>
             <ion-col>
              <ion-item>
@@ -79,7 +218,7 @@
             </ion-col>
         </ion-row>
 
-                <p padding style="color: black" item item-text-wrap>{{info}}</p>
+        <p padding style="color: black" item item-text-wrap>{{info}}</p>
 
     </ion-card>
 </ion-content>

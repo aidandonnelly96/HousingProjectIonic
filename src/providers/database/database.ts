@@ -28,10 +28,12 @@ export class DatabaseProvider {
   userLat: number; 
   userLng: number;
   loading: Loading;
+  months: string[]=["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" ];
+
 
   constructor(public events: Events, public auth: AuthProvider, public loadingCtrl: LoadingController) {}
-
-getRequestedHomes(currentLat, currentLong, radius, buildingType, status){
+  
+getRequestedHomes(currentLat, currentLong, radius, lower, upper,  status, time, buildingType, electricity, plumbing, furniture, rooms, roof, garden, windows){
     this.homes = [];
     console.log("getting requested");
     this.currentLat=currentLat;
@@ -51,16 +53,34 @@ getRequestedHomes(currentLat, currentLong, radius, buildingType, status){
             distance: distance,
             location: location
         };
-
+        
         var query = firebase.database().ref('/homes').child(key);
         query.once('value')
              .then(snap => {
-                if(snap.val().postStatus!="draft"){
+                if(snap.val().postStatus=="published"){
                     if(status==undefined || status==snap.val().status || status=="Any" || status.length==0){
                         if(buildingType==undefined || buildingType==snap.val().buildingType || buildingType=="Any" || buildingType.length==0){
-                            me.homes.push(snap.val());
-                            me.events.publish('new home', home, Date.now());
-                            me.events.publish('home:entered',me.homes,Date.now());
+                            if(snap.val().EstPropertySize>=lower && snap.val().EstPropertySize<=upper){
+                                if(time==undefined || time == "Any" || time==snap.val().timeLeftVacant || time.length==0){
+                                    if(electricity="Any" || electricity == undefined || electricity.length==0 || electricity == snap.val().electricity){
+                                         if(plumbing="Any" || plumbing == undefined || plumbing.length==0 || plumbing == snap.val().plumbing){
+                                           if(furniture="Any" || furniture == undefined || furniture.length==0 || furniture == snap.val().furniture){
+                                                    if(rooms="Any" || rooms == undefined || rooms.length==0 || rooms == snap.val().rooms){
+                                                        if(roof="Any" || roof == undefined || roof.length==0 || roof == snap.val().roof){
+                                                            if(garden="Any" || garden == undefined || garden.length==0 || garden == snap.val().garden){
+                                                                if(windows="Any" || windows == undefined || windows.length==0 || windows == snap.val().windows){
+                                                                    me.homes.push(snap.val());
+                                                                    me.events.publish('new home', home, Date.now());
+                                                                    me.events.publish('home:entered',home,Date.now());
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                            }
+                                        }                               
+                                    }
+                                }
+                            }
                         }
                     }
                 }
@@ -70,44 +90,146 @@ getRequestedHomes(currentLat, currentLong, radius, buildingType, status){
     this.events.publish('home:entered',this.homes,Date.now());
 }
 
-postHome(title, address, info, status, buildingType, imageData, postStatus, key) {
-  this.loading = this.loadingCtrl.create();
-  this.loading.present();
+
+
+postHome(title, address, info, status, buildingType, imageData, postStatus,  key, thumbUrl, lat, long, size, time, electricity, plumbing, furniture, rooms, roof, windows, garden, user, existingPhotos, currentPostStatus){
   this.geoFire = new Geofire(firebase.database().ref('locations-ref'));
   var downloadURLs = [];
+  var precedes = [];
+  var homeData = {};
   var newHomeKey = "";
-  if(key==""){
-    newHomeKey = firebase.database().ref().child('homes').push().key;
-  }
-  else{
-    newHomeKey=key;
+  var existingHomeKey = "";
+  var me = this;
+
+  if(currentPostStatus=="published"){
+    firebase.database().ref('/homes/'+key+'/postStatus').set("edited");
   }
   
-    var homeData = {
-        id: newHomeKey,
-        title: title,
-        address: address,
-        status: status,
-        buildingType: buildingType,
-        info: info,
-        userID: this.auth.getCurrentUser().uid,
-        lat: this.userLat,
-        long: this.userLng,
-        postStatus: postStatus,
-        posted: new Date().getTime()
-    };
+  newHomeKey = firebase.database().ref().child('homes').push().key;
+  
+  if(lat==91 && long ==181){
+    lat=this.userLat;
+    long=this.userLng;
+  }
+  
+  var historyQuery=firebase.database().ref('/homes/'+key+'/succeeds/');
+  historyQuery.once('value')
+    .then(snap=>{
+        precedes.push(key);
+        snap.forEach(function(data){
+            precedes.push(data.val());
+        });
+        
+        var dateSuffix="";
+        var dt=new Date(Date.now());
+        if((dt.getDate()-3)%10==0){
+            dateSuffix="rd";
+        }
+        else if((dt.getDate()-2)%10==0){
+            dateSuffix="nd";
+        }
+        else{
+            dateSuffix="th";
+        }
+        var datePosted=dt.getDate()+dateSuffix+" "+this.months[dt.getMonth()]+" "+dt.getFullYear();
+            
+        if(currentPostStatus=="published"){
+            homeData = {
+                id: newHomeKey,
+                title: title,
+                address: address,
+                status: status,
+                buildingType: buildingType,
+                info: info,
+                userID: this.auth.getCurrentUser().uid,
+                lat: lat,
+                thumbnail: { url: thumbUrl },
+                long: long,
+                images: existingPhotos,
+                postStatus: postStatus,
+                EstPropertySize: size,
+                timeLeftVacant: time,
+                electricity: electricity,
+                plumbing: plumbing,
+                furniture: furniture,
+                succeeds: precedes,
+                rooms: rooms,
+                roof: roof,
+                windows: windows,
+                garden: garden,
+                usersRelation: user,
+                posted: new Date().getTime(),
+                datePosted: datePosted
+            };
+        }
+        else if(currentPostStatus=="draft"){
+            console.log(key);
+            homeData = {
+                id: newHomeKey,
+                title: title,
+                address: address,
+                status: status,
+                buildingType: buildingType,
+                info: info,
+                userID: this.auth.getCurrentUser().uid,
+                lat: lat,
+                thumbnail: { url: thumbUrl },
+                long: long,
+                images: existingPhotos,
+                postStatus: postStatus,
+                EstPropertySize: size,
+                timeLeftVacant: time,
+                electricity: electricity,
+                plumbing: plumbing,
+                furniture: furniture,
+                rooms: rooms,
+                roof: roof,
+                windows: windows,
+                garden: garden,
+                usersRelation: user,
+                posted: new Date().getTime(),
+                datePosted: datePosted
+            };
+            firebase.database().ref('/homes/'+key).remove();
+        }
+        else if(currentPostStatus==undefined){
+            homeData = {
+                id: newHomeKey,
+                title: title,
+                address: address,
+                status: status,
+                buildingType: buildingType,
+                info: info,
+                userID: this.auth.getCurrentUser().uid,
+                lat: lat,
+                thumbnail: { url: thumbUrl },
+                long: long,
+                postStatus: postStatus,
+                EstPropertySize: size,
+                timeLeftVacant: time,
+                electricity: electricity,
+                plumbing: plumbing,
+                furniture: furniture,
+                rooms: rooms,
+                roof: roof,
+                windows: windows,
+                garden: garden,
+                usersRelation: user,
+                posted: new Date().getTime(),
+                datePosted: datePosted
+            };
+        }
+
     var updates = {};
-    var me = this;
     updates['/homes/' + newHomeKey] = homeData;
     firebase.database().ref().update(updates);
+    }).then(function(){
     
       for(let image of imageData){
         var promises=[];
         if(image.state=="new"){
-            console.log(imageData[0]);
             (function (i){
                var newImageKey = firebase.database().ref().child('images').push().key;
-               console.log(newImageKey);
                var imageRef = firebase.storage().ref('images/' + newHomeKey + '/' + newImageKey);
                var uploadTask = imageRef.putString(i.data, 'base64', {contentType: 'image/jpg'});
                uploadTask.on('state_changed', function(snapshot){
@@ -115,41 +237,89 @@ postHome(title, address, info, status, buildingType, imageData, postStatus, key)
 
                 }, function() {
                     promises.push(imageRef.getDownloadURL().then(function(url){
-                        console.log(url);
                         me.urls.push(url);
-                        firebase.database().ref('/images/'+newImageKey).set({url: url, forHome: newHomeKey});
+                        firebase.database().ref('/homes/'+newHomeKey+'/images/'+newImageKey).set({url: url});
                         return firebase.database().ref('/homes/'+newHomeKey+'/thumbnail').set({url: me.urls[0]});
                     }));
                     return Promise.all(promises).then(function(data){
                         if(postStatus=="published"){
                             me.geoFire.set(newHomeKey, [me.userLat, me.userLng]).then(function() {
                                 console.log("Provided key has been added to GeoFire");
-                                console.log(promises);
-                                me.loading.dismiss();
                              }, function(error) {
-                                me.loading.dismiss();
                                 console.log("Error: " + error);
                             })
                         }
                         else{
-                            me.loading.dismiss();
+                            me.urls=[];
                         }
                     });
                 });
             })(image);
-            console.log(promises);
+        }
+        else if(image.state=="gallery"){
+                var newImageKey = firebase.database().ref().child('images').push().key;
+                console.log("galpub");
+                firebase.database().ref('/homes/'+newHomeKey+'/thumbnail').set({url: image.src});
+                firebase.database().ref('/homes/'+newHomeKey+'/images/'+newImageKey).set({url: image.src}).then(function(data){
+                    if(postStatus=="published"){
+                            me.geoFire.set(newHomeKey, [me.userLat, me.userLng]).then(function() {
+                                console.log("Provided key has been added to GeoFire");
+                             }, function(error) {
+                                console.log("Error: " + error);
+                            })
+                        }
+                        else{
+                            me.urls=[];
+                        }
+                });
+        }
+        else{
+            if(postStatus=="published"){
+                me.geoFire.set(newHomeKey, [me.userLat, me.userLng]).then(function() {
+                    console.log("Provided key has been added to GeoFire");
+                    me.urls=[];
+                 }, function(error) {
+                    console.log("Error: " + error);
+                })
+            }
+            else{
+                me.urls=[];
+            }
         }
     }
+    });
 }
     
 addToFavourites(homeID){
-        var newFavouriteKey = firebase.database().ref().child('favourites').push().key;
-        var favData = {
-            userID: this.auth.getCurrentUser().uid,
-            homeID: homeID,
-        };
-        var updates  = {};
-        updates['/favourites/' + newFavouriteKey] = favData;
-        firebase.database().ref().update(updates);
+    firebase.database().ref().child('userProfile/'+this.auth.getCurrentUser().uid+'/favourites/'+homeID).set({homeID: homeID});
+}
+removeHome(id){
+    firebase.database().ref('/homes/'+id).remove();
+    firebase.database().ref('/locations-ref/'+id).remove();
+}
+getHistoryForHome(homeID){
+
+    var homeQuery: any;
+    var succeeds=true;
+    var me=this;
+    var homes=[];
+    var firstHomeQuery= firebase.database().ref('/homes/'+homeID);
+    firstHomeQuery.once('value')
+            .then(snap=> {
+                homes.push(snap.val());
+            });
+
+    var query = firebase.database().ref('/homes/'+homeID+'/succeeds');
+    query.once('value')
+        .then(snap=> {
+            snap.forEach(function(data){
+                homeQuery=firebase.database().ref('/homes/'+data.val());
+                homeQuery.once('value')
+                    .then(homeSnap=> {
+                        homes.push(homeSnap.val());
+                    })
+            })
+        });
+        return homes;
 }
 }

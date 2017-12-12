@@ -24,6 +24,7 @@ export class AuthProvider {
     return firebase.auth().createUserWithEmailAndPassword(email, password)
                           .then( newUser => {
                                 firebase.database().ref('/userProfile').child(newUser.uid).set({ email: email });
+                                console.log(firstname);
                                 return newUser.updateProfile({displayName: firstname});
                           }).catch(function(error) {
                                 console.log(error);

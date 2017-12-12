@@ -55,6 +55,8 @@ export class AutocompletePage {
  geoCode(place: any){
    this.nativeGeocoder.forwardGeocode(place)
                       .then((coordinates: NativeGeocoderForwardResult) => {
+                        console.log(place);
+                        console.log(coordinates);
                         var returnItem: (any|any|any) = [place, coordinates.latitude, coordinates.longitude]
                         this.chooseItem(returnItem);
                       })

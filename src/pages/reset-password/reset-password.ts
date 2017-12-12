@@ -33,7 +33,7 @@ export class ResetPasswordPage {
         this.authProvider.resetPassword(this.resetPasswordForm.value.email)
         .then((user) => {
           let alert = this.alertCtrl.create({
-            message: "We sent you a reset link to your email",
+            message: "An email containing a password reset link has been sent to the email address you provided.",
             buttons: [
               {
                 text: "Ok",

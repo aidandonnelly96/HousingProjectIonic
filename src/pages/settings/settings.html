@@ -12,6 +12,19 @@
     </ion-navbar>
 </ion-header>
 
-<ion-content padding>
-
+<ion-content>
+    <ion-list>
+        <button ion-item (click)="presentConfirmLogout()">
+            <ion-icon name="download"></ion-icon>
+            Export Data
+        </button>
+        <button ion-item (click)="goToResetPassword()">
+            <ion-icon name="lock"></ion-icon>
+            Reset Password
+        </button>
+        <button ion-item (click)="presentConfirmLogout()">
+            <ion-icon name="log-out"></ion-icon>
+            Log out
+        </button>
+    </ion-list>
 </ion-content>

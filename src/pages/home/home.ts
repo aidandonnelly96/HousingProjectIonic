@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { Nav, ModalController, ViewController } from 'ionic-angular';
+import { App, Nav, ModalController, ViewController, AlertController } from 'ionic-angular';
 import { ModalPage } from '../modal/modal';
 import { HomeDetailPage } from '../home-detail/home-detail';
 import { NavController, Events } from 'ionic-angular';
@@ -23,15 +23,19 @@ export class HomePage {
     homes = []; 
     currentLatitude: number; 
     currentLongitude: number;
+    
+    numHomes: number;
 
-    constructor(public navCtrl: NavController, public modalCtrl: ModalController, public popoverCtrl: PopoverController, private nativePageTransitions: NativePageTransitions, public db: DatabaseProvider, public events: Events, private geolocation: Geolocation, public auth: AuthProvider) {
+    constructor(public navCtrl: NavController, public modalCtrl: ModalController, public popoverCtrl: PopoverController, private nativePageTransitions: NativePageTransitions, public db: DatabaseProvider, public events: Events, private geolocation: Geolocation, public auth: AuthProvider, public appCtrl: App, public alertCtrl: AlertController) {
         this.homes = this.db.homes;
+        this.numHomes=this.homes.length;
         events.subscribe('home:entered', (time) => {
             this.homes=this.db.homes;
+            this.numHomes=this.homes.length;
         });
     }
     goToHomeDetail(h) {
-        this.navCtrl.push(HomeDetailPage, {
+        this.appCtrl.getRootNav().push(HomeDetailPage, {
             home: h
         });
     }
@@ -40,24 +44,42 @@ export class HomePage {
         slidingItem.close();
         this.db.addToFavourites(homeID);
     }
-
-    doRefresh(refresher) {
-      console.log("refreshing");
-
-      setTimeout(() => {
-          console.log('Async operation has ended');
-          refresher.complete();
-      }, 2000);
+    
+    removeHome(homeID, slidingItem){
+        slidingItem.close();
+        let alert = this.alertCtrl.create({
+            title: 'Are you sure?',
+            message: 'Are you sure you want to remove this home?',
+            buttons: [
+              {
+                text: 'Cancel',
+                role: 'cancel',
+                handler: () => {}
+              },
+              {
+                text: 'Remove',
+                handler: () => {
+                    this.db.removeHome(homeID);
+                }
+              }
+            ]
+        });
+        alert.present();
+    }
+    editHome(home, slidingItem){
+        slidingItem.close();
+        let modal = this.modalCtrl.create(ModalPage, {draft: home});
+        modal.present();
     }
 
     presentModal(){
-    if(this.auth.getCurrentUser()!=null){
-        let modal = this.modalCtrl.create(ModalPage);
-        modal.present();
-    }
-    else{
-        this.navCtrl.push(LoginPage);
-    }
+        if(this.auth.getCurrentUser()!=null){
+            let modal = this.modalCtrl.create( ModalPage );
+            modal.present();
+        }
+        else{
+            this.navCtrl.push(LoginPage);
+        }
     }
 
     openFacet(){

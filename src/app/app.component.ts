@@ -7,6 +7,7 @@ import { MapPage } from '../pages/map/map'
 import { HomePage } from '../pages/home/home'
 import { CameraPage } from '../pages/camera/camera'
 import { TabsPage } from '../pages/tabs/tabs';
+import { GalleryPage } from '../pages/gallery/gallery';
 import { LoginPage } from '../pages/login/login';
 import { AccountPage } from '../pages/account/account';
 import { AuthProvider } from '../providers/auth/auth';
@@ -33,19 +34,34 @@ export class MyApp {
 
   pages: Array<{title: string, component: any, icon: string}>;
   login: Array<{component: any}>;
+  
+  months: string[]=["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" ];
 
   constructor(platform: Platform, statusBar: StatusBar, public geolocation: Geolocation, splashScreen: SplashScreen, public authProvider: AuthProvider, public events: Events, private menu: MenuController, public alertCtrl: AlertController, public db: DatabaseProvider) {
   
+        var dateSuffix="";
+        var dt=new Date(1509716217000);
+        if((dt.getDate()-3)%10==0){
+            dateSuffix="rd";
+        }
+        else if((dt.getDate()-2)%10==0){
+            dateSuffix="nd";
+        }
+        else{
+            dateSuffix="th";
+        }
+        console.log(dt.getDate()+dateSuffix+" "+this.months[dt.getMonth()]+" "+dt.getFullYear());
+  
      this.status="Any";
+        
      this.buildingType="Any";
      events.subscribe('home:entered', (time) => {
             this.homes=this.db.homes;
-            console.log(this.homes);
       });
      this.getHomesForCurrentLocation();
      this.pages = [
             { title: 'My Account', component: AccountPage, icon: 'person' },
-            { title: 'Capture', component: CameraPage, icon: 'camera' }
+            { title: 'Gallery', component: GalleryPage, icon: 'image' }
      ];
      this.login = [
             { component: LoginPage }
@@ -111,13 +127,14 @@ export class MyApp {
   getHomesForCurrentLocation(){
     this.geolocation.getCurrentPosition().then((resp) => {
          console.log(resp.coords.latitude);
+         console.log(resp);
          this.db.userLat=resp.coords.latitude;
          this.db.userLng=resp.coords.longitude;
          console.log(this.db.userLat);
-         this.db.getRequestedHomes(resp.coords.latitude, resp.coords.longitude, 5, this.buildingType, this.status);
+         this.db.getRequestedHomes(resp.coords.latitude, resp.coords.longitude, 5, 0, 30000, this.status, "Any", this.buildingType, "Any", "Any", "Any", "Any", "Any", "Any", "Any");
     }).catch((error) => {
          console.log(error);
-         this.db.getRequestedHomes(53.3813572, -6.5940997, 5, this.buildingType, this.status);
+         this.db.getRequestedHomes(53.3813572, -6.5940997, 5, this.status, "Any", this.buildingType, "Any", "Any", "Any", "Any", "Any", "Any", "Any", "Any", "Any");
     });
   }
 }

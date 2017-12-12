@@ -31,42 +31,24 @@ export class FavouritesPage {
     console.log('ionViewDidLoad FavouritesPage');
     }
     getFavouritesByUserID(uid){
-        console.log("getting");
         var favs=[];
-        var favQuery = firebase.database().ref('/favourites');
-        var me = this;
+        var favQuery=firebase.database().ref().child('userProfile/'+uid+'/favourites');
+        var me=this;
         favQuery.once('value')
-             .then(parentSnap => {
-                    parentSnap.forEach(function(snap)
+            .then(parentSnap => {
+                parentSnap.forEach(function(snap)
                     {
-                        if(snap.val().userID==uid){
-                            var homeQuery = firebase.database().ref('/homes/').child(snap.val().homeID);
-                            homeQuery.once('value')
-                                .then(homeSnap => {
-                                    favs.push(homeSnap.val());
-                                    me.favourites=favs;
-                                })
-                        }
+                        var homeQuery = firebase.database().ref('/homes/').child(snap.val().homeID);
+                        homeQuery.once('value')
+                            .then(homeSnap => {
+                                favs.push(homeSnap.val());
+                                me.favourites=favs;
+                            })
                     })
-        });
+            })
     }
     removeFromFavourites(id){
-        var favQuery = firebase.database().ref('/favourites');
-        var me = this;
-        favQuery.once('value')
-             .then(parentSnap => {
-                    parentSnap.forEach(function(snap)
-                    {
-                        if(snap.val().userID==me.uid){
-                            if(snap.val().homeID==id){
-                                console.log(snap.key);
-                                firebase.database().ref('/favourites/'+snap.key).remove().then(function(data){
-                                    me.getFavouritesByUserID(me.uid);
-                                });
-                            }
-                        }
-                    })
-        });
+        var favQuery=firebase.database().ref().child('userProfile/'+this.auth.getCurrentUser().uid+'/favourites/'+id).remove();
     }
     goToHomeDetail(h) {
         this.appCtrl.getRootNav().push(HomeDetailPage, {

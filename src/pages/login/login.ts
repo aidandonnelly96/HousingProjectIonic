@@ -11,6 +11,7 @@ import { AuthProvider } from '../../providers/auth/auth';
 import { HomePage } from '../home/home';
 import { TabsPage } from '../tabs/tabs';
 import { SignupPage } from '../signup/signup';
+import { ResetPasswordPage } from '../reset-password/reset-password';
 import { Events } from 'ionic-angular';
 
 @IonicPage({
@@ -64,5 +65,8 @@ export class LoginPage {
 }
 goToRegister(){ 
   this.navCtrl.push(SignupPage); 
+}
+goToResetPassword(){ 
+  this.navCtrl.push(ResetPasswordPage); 
 }
 }
