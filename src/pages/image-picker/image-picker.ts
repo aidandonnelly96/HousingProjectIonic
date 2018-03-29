@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { ViewController, IonicPage, NavController, NavParams } from 'ionic-angular';
 import { DatabaseProvider } from '../../providers/database/database';
 import { AuthProvider } from '../../providers/auth/auth';
-import { Camera, CameraOptions } from '@ionic-native/camera';
 
 import firebase from 'firebase';
 
@@ -19,56 +18,58 @@ import firebase from 'firebase';
 })
 export class ImagePickerPage {
 
-  images: Array<{lat: number, lng: number, url: any, selected: boolean, index: number}>; 
-  chosenImages: Array<{lat: number, lng: number, url: any, selected: boolean}>; 
+  //All of the current users gallery photos
+  images: Array<{lat: number, lng: number, url: any, selected: boolean}>;
+
+  //the images that the user has selected
+  chosenImages: Array<{lat: number, lng: number, url: any, selected: boolean}>;
   grid: Array<Array<string>>; //array of arrays
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public db: DatabaseProvider, public auth: AuthProvider, private camera: Camera, public viewCtrl: ViewController) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public db: DatabaseProvider, public auth: AuthProvider, public viewCtrl: ViewController) {
     this.images=[];
     this.chosenImages=[];
     this.getImagesForUser();
     this.grid = Array(Math.ceil(this.images.length/2));
   }
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad GalleryPage');
-  }
-
   getImagesForUser(){
-        console.log("getting");
-        var images=[];
+        //firebase database query to the path storing current user's gallery photos, store each once in this.images
         var imgQuery = firebase.database().ref('/userProfile/'+this.auth.getCurrentUser().uid+'/galleryPhotos');
         var me = this;
-        var i=0;
         imgQuery.once('value')
              .then(parentSnap => {
                     parentSnap.forEach(function(snap)
                     {
-                        console.log(snap.val());
                         me.images.push({
                             lat: snap.val().lat,
                             lng: snap.val().lng,
                             url: snap.val().url,
                             selected: false,
-                            index: i
                         });
-                        i=i+1;
                     })
         });
-    
+
   }
+
+  //image stores the image that the user is selecting
   addPhoto(image){
-    this.images[image.index].selected=true;
+    //mark the desired image as selected
+    image.selected=true;
   }
-  
+
+  //image stores the image that the user is de-selecting
   removePhoto(image){
-      this.images[image.index].selected=false;
+      //un-mark the desired image as selected
+      image.selected=false;
   }
-  
+
   choosePhotos(){
-    this.viewCtrl.dismiss(this.images);
+    //this function closes the current window AND returns the images that have been selected
+    this.viewCtrl.dismiss(this.images.filter(image => image.selected==true));
   }
+
   closeWindow(){
+    //this function closes the current window without choosing the images that have been selected
     this.viewCtrl.dismiss();
   }
 }

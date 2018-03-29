@@ -1,5 +1,9 @@
 page-history {
-
+    .info{
+        white-space: nowrap; 
+        overflow: hidden; 
+        text-overflow: ellipsis;
+    }
 }
 $popover-md-width:                     250px !default;
 $popover-md-min-width:                 0 !default;

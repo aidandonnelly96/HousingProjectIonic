@@ -26,7 +26,13 @@
     <ion-grid>
       <ion-row>
         <ion-col col-4 *ngFor="let file_uri of images">
-          <img [src]="file_uri.url">    </ion-col>
+             <ion-thumbnail item-start>
+              <img [src]="file_uri.url">  
+            </ion-thumbnail> 
+            <ion-fab bottom right>
+                <button color="danger" ion-fab mini (click)="promptDelete(file_uri.id)"><ion-icon name="trash"></ion-icon></button>
+            </ion-fab>
+        </ion-col>
       </ion-row>
     </ion-grid>
     <ion-fab bottom right >

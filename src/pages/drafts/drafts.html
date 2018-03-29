@@ -4,38 +4,90 @@
   See http://ionicframework.com/docs/components/#navigation for more info on
   Ionic pages and navigation.
 -->
+
+<!--ion-header contains the elements at the top of the screen,
+  including the navbar and back navigation button that pops this page from the navigation stack-->
 <ion-header  no-border>
     <ion-navbar color="primary">
+        <ion-buttons left>
+          <button (click)="this.viewCtrl.dismiss()" ion-button >
+                <ion-icon style="font-size: 20px;" name="arrow-back"></ion-icon>
+          </button>
+        </ion-buttons>
         <ion-title>
-            My Account
+            Drafts
         </ion-title>
     </ion-navbar>
 </ion-header>
 
+<!--ion-content contains all other page content-->
 <ion-content>
+
+  <!--if the user has previously saved one or more drafts, display them in a list view,
+    this view reuses the same layout seen in the main home-list page-->
     <ion-list *ngIf="drafts.length!=0">
-        <ion-card #item *ngFor="let d of drafts">
-        <ion-item-sliding #slidingItem >
-            <button ion-item (click)="editDraft(d)">
-                <ion-thumbnail item-start>
-                    <img *ngIf="d.thumbnail!=undefined" src={{d.thumbnail.url}}>
-                </ion-thumbnail>
-                <h2 text-capitalize><a>{{d.title}}</a></h2>
-                <p>Status: {{d.status}}</p>
-            </button>
-            <ion-item-options>
-                <button ion-button color="accent">
-                    <ion-icon name="create" (click)="editDraft(d)"></ion-icon>
-                    Edit
-                </button>
-                <button ion-button (click)="removeFromDrafts(d.id, slidingItem)" color="danger">
-                    <ion-icon name="trash"></ion-icon>
-                    Remove
-                </button>
-            </ion-item-options>
-        </ion-item-sliding>
-        </ion-card>
+        <ion-item-divider color="light" *ngIf="drafts.length!=1">{{drafts.length}} results</ion-item-divider>
+        <ion-item-divider color="light" *ngIf="drafts.length==1">{{drafts.length}} result</ion-item-divider>
+
+        <!--ionic responsive grid element allows us to construct a responsive page-->
+        <ion-grid no-padding>
+            <ion-row>
+
+              <!-- the following line details the responsiveness of the page
+                  On a small page(mobile phone), each home should occupy the full with of the screen (12/12 columns)
+                  On a medium page(tablet), each home should occupy half the width of the screen (6/12 columns)
+                  On a large page(large tablet), each home should occupy 3 quarters of the width of the screen (9/12 columns)
+                  On an extra-large page(desktop), each home should occupy 1 quarter of the width of the screen (3/12 columns)-->
+              <ion-col col-12 col-md-6 col-lg-4 col-xl-3 *ngFor="let d of drafts | slice:0:last;">
+
+                <!--for each individual draft d in drafts, we add a card displaying its thumbnail,
+                    title, info fields and the date it was saved-->
+                <ion-card class="home-card" #item>
+                  <img (click)="editDraft(d)" src={{d.thumbnail.url}} style="height: 30vh"/>
+                  <ion-card-content (click)="editDraft(d)" padding>
+                        <ion-card-title text-capitalize style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                          {{d.title}}
+                        </ion-card-title>
+                        <p>
+                            <ion-icon name="calendar"></ion-icon>
+                            {{d.datePosted}}
+                        </p>
+                        <p class="info" *ngIf="d.info.length>0">
+                            {{d.info}}
+                        </p>
+                        <p *ngIf="d.info.length==0">
+                          <br>
+                        </p>
+                  </ion-card-content>
+
+                  <!--below the details of the home, we display a row of options,
+                  the users can edit or remove a draft from here-->
+                  <ion-row *ngIf="auth.getCurrentUser()!=null">
+                      <ion-col text-right>
+                        <button ion-button (click)="editDraft(d)" color="primary" clear color="accent" icon-start>
+                            <ion-icon name="create"></ion-icon>
+                            Edit
+                        </button>
+                      </ion-col>
+                      <ion-col>
+                        <button ion-button (click)="removeFromDrafts(d.id)" clear color="danger" icon-start>
+                            <ion-icon name="trash"></ion-icon>
+                            Remove
+                        </button>
+                      </ion-col>
+                  </ion-row>
+                </ion-card>
+              </ion-col>
+            </ion-row>
+        </ion-grid>
     </ion-list>
+
+    <!--infinite scroll element allows us to load page content incrementally-->
+    <ion-infinite-scroll (ionInfinite)="doInfinite($event)" *ngIf="last < drafts.length">
+       <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Loading more homes..."></ion-infinite-scroll-content>
+     </ion-infinite-scroll>
+
+     <!--If the user hasn't stored any drafts yet, display a message informing them that there are no drafts to show-->
     <ion-list *ngIf="drafts.length==0" padding>
         <ion-item>
             <ion-row>

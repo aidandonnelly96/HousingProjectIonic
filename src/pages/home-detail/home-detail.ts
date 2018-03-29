@@ -1,11 +1,12 @@
-import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { PopoverController, ViewController, ModalController } from 'ionic-angular';
-import { NativePageTransitions, NativeTransitionOptions } from '@ionic-native/native-page-transitions';
+import { Component, ViewChild } from '@angular/core';
+import { IonicPage, NavController, NavParams, ToastController } from 'ionic-angular';
+import { PopoverController, Slides } from 'ionic-angular';
 import { DatabaseProvider } from '../../providers/database/database';
-import { HistoryPage } from '../history/history';
+import { AuthProvider } from '../../providers/auth/auth';
+import { FullscreenPage } from '../fullscreen/fullscreen';
 import { HomeDetailPopoverPage } from '../home-detail-popover/home-detail-popover';
-import { ModalPage } from '../modal/modal';
+import { HomemapPage } from '../homemap/homemap';
+import { InfoPage } from '../info/info';
 
 import firebase from 'firebase';
 
@@ -21,113 +22,74 @@ import firebase from 'firebase';
   templateUrl: 'home-detail.html',
 })
 export class HomeDetailPage {
-    
+
+    @ViewChild(Slides) slides: Slides;
+
+    //the home that is currently in view
     public home: any;
-    public title: string;
-    public address: string;
-    public type: string;
-    public id: string;
-    public info: string;
-    public status: string;
-    public garden: string;
-    public plumbing: string;
-    public roof: string;
-    public windows: string;
-    public rooms: string;
-    public estTime: string;
-    public estSize: string;
-    public electricity: string;
-    public furniture: string;
-    public relation: string;
-    public posted: string;
-    sources = [];
 
-    constructor(public navCtrl: NavController, public navParams: NavParams, public popoverCtrl: PopoverController, private nativePageTransitions: NativePageTransitions, public db: DatabaseProvider) {
-        this.sources = [];
+    //the images stored with the current home
+    sources=[];
+
+    //we hide the tabbed interface until the home has loaded,
+    //this variable tells us when the home has finished loading
+    loaded=false;
+    deleted=false;
+
+    /*this page contains a tabbed view below a sliding image gallery
+
+    the tabs are defined here*/
+    tab1Root: any = HomemapPage;
+    tabRootMap: any = InfoPage;
+
+    constructor(public navCtrl: NavController, public navParams: NavParams, public popoverCtrl: PopoverController, public db: DatabaseProvider, public auth: AuthProvider, private toastCtrl: ToastController) {
+
+        /*when a user selects a home from the map view or list view, the selected home is passed as a parameter to this page
+        navParams.get() retrieves that parameter, we then store it in this.home and use the id to retrieve the corresponding images*/
         this.home = navParams.get("home");
-        this.title = this.home.title;
-        this.address = this.home.address; 
-        this.status = this.home.status;
-        this.type = this.home.buildingType;
-        this.estSize = this.home.EstPropertySize;
-        this.estTime = this.home.timeLeftVacant;
-        this.electricity = this.home.electricity;
-        this.plumbing = this.home.plumbing;
-        this.windows = this.home.windows;
-        this.roof = this.home.roof;
-        this.garden = this.home.garden;
-        this.furniture = this.home.furniture;
-        this.rooms = this.home.rooms;
-        this.relation = this.home.usersRelation;
-        this.info = this.home.info;
-        this.id = this.home.id;
-
-        var timePosted = this.home.posted;
-        var now= new Date().getTime();
-        this.posted=this.msToTime(now-timePosted);
         this.getImageSourcesForThisHome();
+        this.loaded=true;
     }
 
-    ionViewDidLoad() {
-        console.log('ionViewDidLoad HomeDetailPage');
-    }
-     
     getImageSourcesForThisHome(){
-        var imageSources = [];
-        var query=firebase.database().ref('/homes/'+this.id+'/images/');
+        //firebase database query following the path to the images corresponding to this home
+        var query=firebase.database().ref('/homes/'+this.home.id+'/images/');
         var me=this;
         query.once('value')
             .then(homeSnap => {
                 homeSnap.forEach(function(snap)
                     {
-                        me.sources.push(snap.val().url); 
+                        me.sources.push(snap.val().url);
                     })
             });
     }
-    
-    msToTime(s) {
-      var ms = s % 1000;
-      s = (s - ms) / 1000;
-      var secs = s % 60;
-      s = (s - secs) / 60;
-      var mins = s % 60;
-      var hrs = (s - mins) / 60;
-      if(hrs==0 && mins==0)
-          return 'just a moment ago';
-      else if(hrs==0 && mins==1){
-          return mins+' minute ago';
-      }
-      else if(hrs==0)
-          return mins+' minutes ago';
-      else if(hrs==1){
-          return hrs+' hour ago';
-      }
-      else if(hrs<24){
-          return hrs+' hours ago';
-      }
-      else if(hrs<48){
-          return '1 day ago';
-      }
-      else{
-          return Math.floor(hrs/24)+' days ago';
-      }
-    }
+
+    /*this popover displays a list of options for the user to interact with this home: Put Back, Revert, Edit, View History and Remove
+    when the user chooses to present the popoever, the click event is passed to this function*/
     presentPopover(myEvent) {
+
+        //create the popover, passing the current home as a parameter
         let popover = this.popoverCtrl.create(HomeDetailPopoverPage, {
-            id: this.id,
             home: this.home
         });
+
+        //display the popover, passing the click event as a parameter, which the PopoverController will use to determine its location on the screen
         popover.present({
-          ev : {
-              target : {
-                getBoundingClientRect : () => {
-                  return {
-                    top: '15',
-                    left: '1000'
-                  };
-                }
-              }
-            }
+            ev : myEvent
+        });
+    }
+
+
+    //opens a full screen view of the images for this home
+    goToFullScreen(){
+
+        var me=this;
+
+        //push a new page(FullscreenPage) to the navigation stack,
+        //passing the image sources and the index of the image that is current in view
+        this.navCtrl.push(FullscreenPage, {
+            sources: me.sources,
+            currentIndex: this.slides.getActiveIndex()
         });
     }
 }

@@ -8,10 +8,10 @@
 
   <ion-navbar color="primary">
     <ion-title>Choose images</ion-title>
-    <ion-buttons right>
-         <button (click)="closeWindow()" ion-button >
-         <span ion-text>Cancel</span>
-         </button>
+    <ion-buttons left>
+      <button (click)="closeWindow()" ion-button >
+            <ion-icon style="font-size: 20px;" name="arrow-back"></ion-icon>
+      </button>
     </ion-buttons>
   </ion-navbar>
 </ion-header>
@@ -29,12 +29,11 @@
     <ion-grid>
       <ion-row>
         <ion-col col-4 *ngFor="let image of images">
-            <div>
+            <div *ngIf="image.selected==false" (click)="addPhoto(image)">
                 <img [src]="image.url">
-                <ion-fab bottom right>
-                   <button *ngIf="image.selected==false" ion-fab mini color="accent" (click)="addPhoto(image)"><ion-icon name="add"></ion-icon></button>
-                   <button *ngIf="image.selected==true" ion-fab mini color="danger" (click)="removePhoto(image)"><ion-icon name="close"></ion-icon></button>
-                </ion-fab>
+            </div>
+            <div style="border-color: #448AFF; border-width: 4px; border-style: solid" *ngIf="image.selected==true" (click)="removePhoto(image)">
+                <img [src]="image.url">
             </div>
         </ion-col>
       </ion-row>

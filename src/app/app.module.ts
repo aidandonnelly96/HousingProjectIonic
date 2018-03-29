@@ -5,22 +5,24 @@ import { NativePageTransitions } from '@ionic-native/native-page-transitions';
 import { HTTP } from '@ionic-native/HTTP';
 import { StatusBar } from '@ionic-native/status-bar';
 
-import { NativeGeocoder, NativeGeocoderReverseResult, NativeGeocoderForwardResult } from '@ionic-native/native-geocoder';
+import { NativeGeocoder } from '@ionic-native/native-geocoder';
 
 import { SplashScreen } from '@ionic-native/splash-screen';
 
-import { IonicApp, IonicModule, IonicErrorHandler, NavController } from 'ionic-angular';
+import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { MyApp } from './app.component';
 
 import { HomePage } from '../pages/home/home';
 import { TabsPage } from '../pages/tabs/tabs';
 import { MapPage } from '../pages/map/map';
-import { CameraPage } from '../pages/camera/camera';
+import { HomemapPage } from '../pages/homemap/homemap';
+import { InfoPage } from '../pages/info/info';
 import { ModalPage } from '../pages/modal/modal';
 import { HomeDetailPage } from '../pages/home-detail/home-detail';
 import { HistoryPage } from '../pages/history/history';
-import { HomeDetailPopoverPage } from '../pages/home-detail-popover/home-detail-popover'; 
+import { HomeDetailPopoverPage } from '../pages/home-detail-popover/home-detail-popover';
 import { LoginPage } from '../pages/login/login';
+import { SearchPage } from '../pages/search/search';
 import { MypostsPage } from '../pages/myposts/myposts';
 import { FavouritesPage } from '../pages/favourites/favourites';
 import { DraftsPage } from '../pages/drafts/drafts';
@@ -29,11 +31,13 @@ import { AccountPage } from '../pages/account/account';
 import { ImagePickerPage } from '../pages/image-picker/image-picker';
 import { ResetPasswordPage } from '../pages/reset-password/reset-password';
 import { FacetPage } from '../pages/facet/facet';
+import { FullscreenPage } from '../pages/fullscreen/fullscreen';
 import { Camera } from '@ionic-native/camera';
-import { AutocompletePage } from '../pages/autocomplete/autocomplete';
 import { SignupPage } from '../pages/signup/signup';
 import { GalleryPage } from '../pages/gallery/gallery';
-
+import { PostPopoverPage } from '../pages/post-popover/post-popover';
+import { LocationPickerPage } from '../pages/location-picker/location-picker';
+import { MypostsfilterPage } from '../pages/mypostsfilter/mypostsfilter';
 
 import { SpinnerDialog } from '@ionic-native/spinner-dialog';
 
@@ -55,23 +59,28 @@ firebase.initializeApp({
   declarations: [
     MyApp,
     ModalPage,
-    CameraPage,
     HomeDetailPage,
     HomeDetailPopoverPage,
     LoginPage,
-    AutocompletePage,
+    SearchPage,
     SignupPage,
     AccountPage,
     ImagePickerPage,
+    MypostsfilterPage,
     ResetPasswordPage,
     FacetPage,
+    FullscreenPage,
     HistoryPage,
     MypostsPage,
     FavouritesPage,
     DraftsPage,
     SettingsPage,
+    PostPopoverPage,
+    LocationPickerPage,
     HomePage,
     TabsPage,
+    HomemapPage,
+    InfoPage,
     GalleryPage,
     MapPage
   ],
@@ -83,23 +92,28 @@ firebase.initializeApp({
   entryComponents: [
     MyApp,
     LoginPage,
+    SearchPage,
     FacetPage,
+    FullscreenPage,
     HistoryPage,
-    CameraPage,
-    AutocompletePage,
     ImagePickerPage,
+    MypostsfilterPage,
     HomeDetailPopoverPage,
     SignupPage,
     MypostsPage,
     FavouritesPage,
     DraftsPage,
     SettingsPage,
+    PostPopoverPage,
+    LocationPickerPage,
     AccountPage,
     ResetPasswordPage,
     HomeDetailPage,
     HomePage,
     ModalPage,
     TabsPage,
+    HomemapPage,
+    InfoPage,
     GalleryPage,
     MapPage
   ],
@@ -111,12 +125,11 @@ firebase.initializeApp({
     Camera,
     NativeGeocoder,
     HTTP,
-    AutocompletePage,
     Geolocation,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     AuthProvider,
-    DatabaseProvider,
+    DatabaseProvider
   ]
 })
 export class AppModule {}

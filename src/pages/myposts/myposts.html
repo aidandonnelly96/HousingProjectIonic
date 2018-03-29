@@ -7,40 +7,120 @@
 <ion-header  no-border>
     <ion-navbar color="primary">
         <ion-title>
-            {{displayName}}'s Account
+            My Posts
         </ion-title>
     </ion-navbar>
 </ion-header>
 
 <ion-content>
     <ion-list *ngIf="homes.length>0">
-        <ion-card #item *ngFor="let h of homes">
-        <ion-item-sliding #slidingItem >
-            <button ion-item (click)="goToHomeDetail(h)">
-                <ion-thumbnail item-start>
-                    <img src={{h.thumbnail.url}}>
-                </ion-thumbnail>
-                <h2 text-capitalize><a>{{h.title}}</a></h2>
-                <p>Status: {{h.status}}</p>
-            </button>
-            <ion-item-options>
-                <button ion-button color="accent">
+        <ion-item color="light">
+            <ion-buttons right>
+                <button ion-button icon-only clear (click)="showFilterPopover($event)" text-capitalize>
+                  {{statusFilter}} ({{visibleHomes.length}})<ion-icon name="funnel"></ion-icon>
+                </button>
+            </ion-buttons>
+        </ion-item>
+        <ion-grid no-padding>
+            <ion-row>
+              <ion-col col-12 col-md-6 col-lg-4 col-xl-3 *ngFor="let h of visibleHomes | slice:0:last;">
+                <ion-card class="home-card" #item>
+                  <img (click)="goToHomeDetail(h)" src={{h.thumbnail.url}} style="height: 30vh"/>
+                  <ion-card-content (click)="goToHomeDetail(h)" padding>
+                        <ion-card-title text-capitalize style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                          {{h.title}}
+                        </ion-card-title>
+                        <p>
+                            <ion-icon name="calendar"></ion-icon>
+                            {{h.datePosted}}
+                        </p>
+                        <p class="info" *ngIf="h.info.length>0">
+                            {{h.info}}
+                        </p>
+                        <p *ngIf="h.info.length==0">
+                          <br>
+                        </p>
+                  </ion-card-content>
+                  <ion-row *ngIf="auth.getCurrentUser()!=null">
+                      <ion-col text-right *ngIf="h.postStatus=='published'">
+                        <button (click)="editHome(h)" ion-button clear small color="accent" icon-start>
+                          <ion-icon name='create'></ion-icon>
+                          Edit
+                        </button>
+                      </ion-col>
+                      <ion-col *ngIf="h.postStatus=='deleted'">
+                        <button ion-button clear (click)="putBack(h)" small color="accent" icon-start>
+                            <ion-icon name="redo" ></ion-icon>
+                            Put Back
+                        </button>
+                      </ion-col>
+                      <ion-col *ngIf="h.postStatus=='edited'">
+                        <button ion-button clear (click)="revert(h)" small color="accent" icon-start>
+                            <ion-icon name="redo" ></ion-icon>
+                            Revert
+                        </button>
+                      </ion-col>
+                      <ion-col>
+                        <button (click)="removeHome(h)" ion-button clear small color="danger" icon-start *ngIf="h.postStatus=='published'">
+                            <ion-icon name='trash'></ion-icon>
+                            Remove
+                        </button>
+                      </ion-col>
+                  </ion-row>
+                </ion-card>
+              </ion-col>
+            </ion-row>
+        </ion-grid>
+        <!--<ion-card #item *ngFor="let h of visibleHomes | slice:0:last;">
+          <img (click)="goToHomeDetail(h)" src={{h.thumbnail.url}} style="height: 30vh"/>
+          <ion-card-content (click)="goToHomeDetail(h)">
+            <ion-card-title>
+              {{h.title}}
+            </ion-card-title>
+                <p>
+                    <ion-icon name="calendar"></ion-icon>
+                    {{h.datePosted}}
+                </p>
+                <p>
+                    {{substring(h.info)}}
+                </p>
+          </ion-card-content>
+          <ion-row no-padding>
+              <ion-col text-right>
+                <button ion-button clear (click)="editHome(h)" color="accent">
                     <ion-icon name="create"></ion-icon>
                     Edit
                 </button>
-                <button ion-button color="danger">
+              </ion-col>
+              <ion-col *ngIf="h.postStatus=='published'">
+                <button ion-button clear (click)="removeHome(h.id)" color="danger">
                     <ion-icon name="trash"></ion-icon>
                     Remove
                 </button>
-            </ion-item-options>
-        </ion-item-sliding>
-        </ion-card>
+              </ion-col>
+              <ion-col *ngIf="h.postStatus=='deleted'">
+                <button ion-button clear (click)="putBack(h)" color="accent">
+                    <ion-icon name="redo" ></ion-icon>
+                    Put Back
+                </button>
+              </ion-col>
+              <ion-col *ngIf="h.postStatus=='edited'">
+                <button ion-button clear (click)="revert(h)" color="accent">
+                    <ion-icon name="redo" ></ion-icon>
+                    Revert
+                </button>
+              </ion-col>
+          </ion-row>
+        </ion-card>-->
     </ion-list>
+     <ion-infinite-scroll (ionInfinite)="doInfinite($event)" *ngIf="last < visibleHomes.length">
+       <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Loading more homes..."></ion-infinite-scroll-content>
+     </ion-infinite-scroll>
     <ion-list *ngIf="homes.length==0" padding>
         <ion-item>
             <ion-row>
               <ion-col text-center>
-                  You haven't posted anything yet.
+                  You haven't posted any homes yet.
               </ion-col>
             </ion-row>
         </ion-item>

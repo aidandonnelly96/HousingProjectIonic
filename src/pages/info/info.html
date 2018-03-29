@@ -1,0 +1,224 @@
+<!--
+  Generated template for the InfoPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-content>
+  <ion-card *ngIf="this.home.postStatus=='edited' || this.home.postStatus=='deleted'" >
+        <ion-list no-lines>
+            <ion-item text-wrap *ngIf="this.home.postStatus=='deleted'" (click)="putBack()">
+                <p text-color="danger">
+                    <ion-icon name="warning"></ion-icon>
+                     This home as been removed. Click here to put it back.
+                </p>
+            </ion-item>
+            <ion-item text-wrap *ngIf="this.home.postStatus=='edited'" (click)="revert()">
+                <p text-color="danger">
+                    <ion-icon name="alert"></ion-icon>
+                    This home as been edited. Click here to revert to this version.
+                </p>
+            </ion-item>
+
+        </ion-list>
+    </ion-card>
+    <ion-card>
+        <ion-list no-lines>
+            <ion-item item-text-wrap>
+                <ion-title item-text-wrap text-capitalize>{{home.title}}</ion-title>
+                <button *ngIf="this.auth.getCurrentUser()!=undefined" ion-button clear item-end large (click)="toggleBookmarked()">
+                        <ion-icon *ngIf="bookmarked==true" name="ios-bookmark"></ion-icon>
+                        <ion-icon *ngIf="bookmarked==false" name="ios-bookmark-outline"></ion-icon>
+                </button>
+            </ion-item>
+            <ion-item>
+                <ion-icon style="color: #90A4AE" name="pin" item-start></ion-icon>
+                <ion-label style="color: #90A4AE">{{home.address}}</ion-label>
+            </ion-item>
+            <ion-item>
+                <ion-icon style="color: #90A4AE" name="calendar" item-start></ion-icon>
+                <ion-label style="color: #90A4AE">{{posted}}</ion-label>
+            </ion-item>
+        </ion-list>
+    </ion-card>
+    <ion-card>
+        <ion-row>
+            <ion-col>
+             <ion-item>
+                <p>Status</p>
+            </ion-item>
+            </ion-col>
+            <ion-col></ion-col>
+            <ion-col></ion-col>
+            <ion-col right text-right>
+            <ion-item>
+                <p style="color: black">{{home.status}}</p>
+            </ion-item>
+            </ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-col>
+             <ion-item>
+                <p>Property Type</p>
+            </ion-item>
+            </ion-col>
+            <ion-col></ion-col>
+            <ion-col></ion-col>
+            <ion-col right text-right>
+            <ion-item>
+                <p style="color: black">{{type}}</p>
+            </ion-item>
+            </ion-col>
+        </ion-row>
+                <ion-row>
+            <ion-col>
+             <ion-item>
+                <p>Estimated size</p>
+            </ion-item>
+            </ion-col>
+            <ion-col></ion-col>
+            <ion-col></ion-col>
+            <ion-col right text-right>
+            <ion-item>
+                <p style="color: black">{{estSize}} Sq. Meters</p>
+            </ion-item>
+            </ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-col>
+             <ion-item>
+                <p>Estimated time left vacant</p>
+            </ion-item>
+            </ion-col>
+            <ion-col></ion-col>
+            <ion-col></ion-col>
+            <ion-col right text-right>
+            <ion-item>
+                <p style="color: black">{{estTime}}</p>
+            </ion-item>
+            </ion-col>
+        </ion-row>
+                <ion-row>
+            <ion-col>
+             <ion-item>
+                <p>Electricity</p>
+            </ion-item>
+            </ion-col>
+            <ion-col></ion-col>
+            <ion-col></ion-col>
+            <ion-col right text-right>
+            <ion-item>
+                <p style="color: black">{{electricity}}</p>
+            </ion-item>
+            </ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-col>
+             <ion-item>
+                <p>Plumbing</p>
+            </ion-item>
+            </ion-col>
+            <ion-col></ion-col>
+            <ion-col></ion-col>
+            <ion-col right text-right>
+            <ion-item>
+                <p style="color: black">{{plumbing}}</p>
+            </ion-item>
+            </ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-col>
+             <ion-item>
+                <p>Windows</p>
+            </ion-item>
+            </ion-col>
+            <ion-col></ion-col>
+            <ion-col></ion-col>
+            <ion-col right text-right>
+            <ion-item>
+                <p style="color: black">{{windows}}</p>
+            </ion-item>
+            </ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-col>
+             <ion-item>
+                <p>Roof</p>
+            </ion-item>
+            </ion-col>
+            <ion-col></ion-col>
+            <ion-col></ion-col>
+            <ion-col right text-right>
+            <ion-item>
+                <p style="color: black">{{roof}}</p>
+            </ion-item>
+            </ion-col>
+        </ion-row>
+                <ion-row>
+            <ion-col>
+             <ion-item>
+                <p>Garden</p>
+            </ion-item>
+            </ion-col>
+            <ion-col></ion-col>
+            <ion-col></ion-col>
+            <ion-col right text-right>
+            <ion-item>
+                <p style="color: black">{{garden}}</p>
+            </ion-item>
+            </ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-col>
+             <ion-item>
+                <p>Furniture</p>
+            </ion-item>
+            </ion-col>
+            <ion-col></ion-col>
+            <ion-col></ion-col>
+            <ion-col right text-right>
+            <ion-item>
+                <p style="color: black">{{furniture}}</p>
+            </ion-item>
+            </ion-col>
+        </ion-row>
+                <ion-row>
+            <ion-col>
+             <ion-item>
+                <p>Rooms</p>
+            </ion-item>
+            </ion-col>
+            <ion-col></ion-col>
+            <ion-col></ion-col>
+            <ion-col right text-right>
+            <ion-item>
+                <p style="color: black">{{rooms}}</p>
+            </ion-item>
+            </ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-col>
+             <ion-item>
+                <p>Reporter's relation to property</p>
+            </ion-item>
+            </ion-col>
+            <ion-col></ion-col>
+            <ion-col></ion-col>
+            <ion-col right text-right>
+            <ion-item>
+                <p style="color: black">{{relation}}</p>
+            </ion-item>
+            </ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-col>
+             <ion-item>
+                <p>Info</p>
+            </ion-item>
+            </ion-col>
+        </ion-row>
+
+        <p padding style="color: black" item item-text-wrap>{{info}}</p>
+
+    </ion-card>
+</ion-content>

@@ -2,50 +2,50 @@
   "_args": [
     [
       {
-        "raw": "cordova-plugin-add-swift-support@1.7.0",
+        "raw": "cordova-plugin-add-swift-support",
         "scope": null,
         "escapedName": "cordova-plugin-add-swift-support",
         "name": "cordova-plugin-add-swift-support",
-        "rawSpec": "1.7.0",
-        "spec": "1.7.0",
-        "type": "version"
+        "rawSpec": "",
+        "spec": "latest",
+        "type": "tag"
       },
-      "/Users/aidandonnelly/Desktop/FINAL YEAR/FYP - Housing Project/node_modules"
+      "/Users/aidandonnelly/Desktop/FINAL YEAR/HousingProject"
     ]
   ],
-  "_from": "cordova-plugin-add-swift-support@1.7.0",
-  "_id": "cordova-plugin-add-swift-support@1.7.0",
+  "_from": "cordova-plugin-add-swift-support@latest",
+  "_id": "cordova-plugin-add-swift-support@1.7.1",
   "_inCache": true,
   "_location": "/cordova-plugin-add-swift-support",
-  "_nodeVersion": "6.3.0",
+  "_nodeVersion": "8.9.1",
   "_npmOperationalInternal": {
     "host": "s3://npm-registry-packages",
-    "tmp": "tmp/cordova-plugin-add-swift-support-1.7.0.tgz_1499447705628_0.2263350470457226"
+    "tmp": "tmp/cordova-plugin-add-swift-support-1.7.1.tgz_1513982776655_0.538276479812339"
   },
   "_npmUser": {
     "name": "alexiskofman",
     "email": "alexis.kofman@gmail.com"
   },
-  "_npmVersion": "5.0.3",
+  "_npmVersion": "5.5.1",
   "_phantomChildren": {},
   "_requested": {
-    "raw": "cordova-plugin-add-swift-support@1.7.0",
+    "raw": "cordova-plugin-add-swift-support",
     "scope": null,
     "escapedName": "cordova-plugin-add-swift-support",
     "name": "cordova-plugin-add-swift-support",
-    "rawSpec": "1.7.0",
-    "spec": "1.7.0",
-    "type": "version"
+    "rawSpec": "",
+    "spec": "latest",
+    "type": "tag"
   },
   "_requiredBy": [
     "#USER",
     "/"
   ],
-  "_resolved": "https://registry.npmjs.org/cordova-plugin-add-swift-support/-/cordova-plugin-add-swift-support-1.7.0.tgz",
-  "_shasum": "ed7dfb62b8ef6d6c79d634920ccb3f1cd8aff77c",
+  "_resolved": "https://registry.npmjs.org/cordova-plugin-add-swift-support/-/cordova-plugin-add-swift-support-1.7.1.tgz",
+  "_shasum": "91a3483d3c9092cf238aee69e526a15465e0cab8",
   "_shrinkwrap": null,
-  "_spec": "cordova-plugin-add-swift-support@1.7.0",
-  "_where": "/Users/aidandonnelly/Desktop/FINAL YEAR/FYP - Housing Project/node_modules",
+  "_spec": "cordova-plugin-add-swift-support",
+  "_where": "/Users/aidandonnelly/Desktop/FINAL YEAR/HousingProject",
   "author": {
     "name": "Alexis Kofman",
     "email": "alexis.kofman@gmail.com",
@@ -76,11 +76,11 @@
   },
   "directories": {},
   "dist": {
-    "integrity": "sha512-BzCsTaRrX2RP5WT3bPzVa0DQXUq6CCh2hQOmcBuPmwcxFpMiu3HCMrQsMjOE9HOtxTa22nGs49vOZLf9hiWyGQ==",
-    "shasum": "ed7dfb62b8ef6d6c79d634920ccb3f1cd8aff77c",
-    "tarball": "https://registry.npmjs.org/cordova-plugin-add-swift-support/-/cordova-plugin-add-swift-support-1.7.0.tgz"
+    "integrity": "sha512-pD8rf8qR9C9znj32d/uUzYKW1XOgE/bngXtSUtfwzC5TXbiLs1NIwc4l20qB2eojtG8L0k/zusCOW/tytdXYmw==",
+    "shasum": "91a3483d3c9092cf238aee69e526a15465e0cab8",
+    "tarball": "https://registry.npmjs.org/cordova-plugin-add-swift-support/-/cordova-plugin-add-swift-support-1.7.1.tgz"
   },
-  "gitHead": "dffa622231f5b4ecd7bfa0a1011a0b6ba8b5a88a",
+  "gitHead": "4dc7cd7742701f0f2284c616b726fde636947842",
   "homepage": "https://github.com/akofman/cordova-plugin-add-swift-support",
   "keywords": [
     "cordova",
@@ -109,5 +109,5 @@
     "build": "webpack --config webpack.config.js",
     "test": "eslint src"
   },
-  "version": "1.7.0"
+  "version": "1.7.1"
 }

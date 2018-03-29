@@ -1,10 +1,13 @@
 <ion-header  no-border>
     <ion-navbar color="primary">
         <ion-title>
+            <!--Current user's first name, provided by firebase-->
             {{displayName}}'s Account
         </ion-title>
     </ion-navbar>
 </ion-header>
+
+<!--ion-tabs element providing the tabbed layout-->
 <ion-tabs tabsHighlight="true" color="primary" tabsPlacement="top">
     <ion-tab [root]="tab0Root" tabTitle="My Posts" label="My Posts" tabIcon="clipboard"></ion-tab>  
     <ion-tab [root]="tab1Root" tabTitle="Bookmarks" label="Bookmarks" tabIcon="bookmark"></ion-tab>

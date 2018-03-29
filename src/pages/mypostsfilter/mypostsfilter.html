@@ -1,0 +1,25 @@
+<!--
+  Generated template for the MypostsfilterPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+
+<ion-list>
+  <button ion-item (click)="chooseFilter('all')" detail-none>
+      All
+      <ion-icon *ngIf="currentFilter=='all'" name="checkmark"></ion-icon>
+  </button>  
+  <button ion-item (click)="chooseFilter('published')" detail-none>
+      Published
+      <ion-icon *ngIf="currentFilter=='published'" name="checkmark"></ion-icon>
+  </button>  
+  <button ion-item (click)="chooseFilter('edited')" detail-none>
+      Edited
+      <ion-icon *ngIf="currentFilter=='edited'" name="checkmark"></ion-icon>
+  </button>  
+  <button ion-item (click)="chooseFilter('deleted')" detail-none>
+      Deleted
+      <ion-icon *ngIf="currentFilter=='deleted'" name="checkmark"></ion-icon>
+  </button>
+</ion-list>

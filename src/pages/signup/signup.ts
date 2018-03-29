@@ -1,14 +1,12 @@
 import { Component } from '@angular/core';
-import { IonicPage, 
-  NavController, 
+import { IonicPage,
+  NavController,
   Loading,
   LoadingController,
   AlertController } from 'ionic-angular';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthProvider } from '../../providers/auth/auth';
 import { EmailValidator } from '../../validators/email';
-import { HomePage } from '../home/home';
-import { TabsPage } from '../tabs/tabs';
 
 @IonicPage({
   name: 'signup'
@@ -21,34 +19,34 @@ export class SignupPage {
   public signupForm: FormGroup;
   public loading: Loading;
   constructor(
-    public navCtrl: NavController, 
+    public navCtrl: NavController,
     public authProvider: AuthProvider,
-    public formBuilder: FormBuilder, 
+    public formBuilder: FormBuilder,
     public loadingCtrl: LoadingController,
     public alertCtrl: AlertController
   ) {
       this.signupForm = formBuilder.group({
-        firstname: ['', 
+        firstname: ['',
           Validators.compose([Validators.required])],
-        surname: ['', 
+        surname: ['',
           Validators.compose([Validators.required])],
-        email: ['', 
+        email: ['',
           Validators.compose([Validators.required, EmailValidator.isValid])],
-        password: ['', 
+        password: ['',
           Validators.compose([Validators.minLength(6), Validators.required])]
       });
     }
-    
-    
+
+
     signupUser(){
       if (!this.signupForm.valid){
         console.log(this.signupForm.value);
       } else {
-        this.authProvider.signupUser(this.signupForm.value.firstname, this.signupForm.value.surname, this.signupForm.value.email, 
+        this.authProvider.signupUser(this.signupForm.value.firstname, this.signupForm.value.surname, this.signupForm.value.email,
             this.signupForm.value.password)
         .then(() => {
           this.loading.dismiss().then( () => {
-            this.navCtrl.setRoot(TabsPage);
+                this.navCtrl.popToRoot();
           });
         }, (error) => {
           this.loading.dismiss().then( () => {

@@ -7,42 +7,58 @@
 <ion-header>
 
   <ion-navbar color="primary">
+    <ion-buttons left>
+      <button (click)="goBack()" ion-button >
+            <ion-icon style="font-size: 20px;" name="arrow-back"></ion-icon>
+      </button>
+    </ion-buttons>
     <ion-title>Post</ion-title>
-  <ion-buttons right>
-     <button (click)="closeModal()" ion-button >
-     <span ion-text>Cancel</span>
-     </button>
-  </ion-buttons>
+      <ion-buttons *ngIf="this.draft==undefined" right>
+          <button ion-button (click)="presentPopover($event)">
+            <ion-icon name="more"></ion-icon>
+          </button>
+      </ion-buttons>
   </ion-navbar>
 </ion-header>
 
 
 <ion-content>
     <ion-item-divider color="light">Photos</ion-item-divider>
-      
+
     <div class="spacer" style="height: 40px;"></div>
     <form #form="ngForm" [formGroup]="homes" (ngSubmit)="postNewHome(form)" novalidate>
-        <ion-slides *ngIf="images.length > 0" style="height: 45vh">
-            <ion-slide *ngFor="let image of images">
-              <ion-card>
-                <img [src]="image.src"/>
-              </ion-card>
-            </ion-slide>
-        </ion-slides>
+
+    <ion-slides pager="true" style="height: 40vh" *ngIf="images.length > 0">
+        <ion-slide *ngFor="let image of images">
+            <ion-card>
+                <ion-item color="other" center>
+                    <img style="height: 40vh; margin-left: auto; margin-right: auto; display: block;" [src]="image.src">
+                </ion-item>
+                <ion-fab bottom right>
+                   <button ion-fab mini color="danger" (click)="removePhoto(image)"><ion-icon name="trash"></ion-icon></button>
+                </ion-fab>
+            </ion-card>
+        </ion-slide>
+    </ion-slides>
 
         <div class="spacer" *ngIf="images.length > 0" style="height: 40px;"></div>
 
-        <button ion-button block color="primary" (click)="presentActionSheet()" type="button">Add Photos</button>
-        
+        <button ion-button block color="primary" *ngIf="!plt.is('core')" (click)="presentActionSheet()" type="button">Add Photos</button>
+        <button ion-button block color="primary" *ngIf="plt.is('core')" (click)="goToImagePicker()" type="button">Add Photos</button>
+
         <div class="spacer" style="height: 40px;"></div>
-        
+
         <ion-item-divider color="light">Info</ion-item-divider>
 
         <ion-list>
             <ion-item>
+                 <ion-searchbar [(ngModel)]="location" formControlName="location" (click)="showLocationPicker()" type="text" placeholder="Location">
+                 </ion-searchbar>
+            </ion-item>
+            <ion-item>
                 <ion-label color="primary" floating>Title</ion-label>
                 <ion-input formControlName="title"></ion-input>
-            </ion-item>            
+            </ion-item>
             <ion-item>
                 <ion-label color="primary" floating>Address</ion-label>
                 <ion-input formControlName="address"></ion-input>
@@ -50,7 +66,7 @@
             <ion-item>
                 <ion-label color="primary">Status</ion-label>
                 <ion-select interface="popover" formControlName="status">
-                  <ion-option selected="true">Suitable for tenants</ion-option>
+                  <ion-option selected="true">Suitable for tenants now</ion-option>
                   <ion-option>Potential for renovation</ion-option>
                   <ion-option>Beyond renovation</ion-option>
                 </ion-select>
@@ -66,17 +82,19 @@
                 </ion-select>
             </ion-item>
             <ion-item>
-                <ion-label color="primary" left>Estimated Size: {{size}} Sq. Metres</ion-label>
-                <ion-range formControlName="size" min="500" max="10000" color="primary" [(ngModel)]="size">
+                <ion-label color="primary" left>Estimated Size: {{homes.value.slidersize}} Sq. Meters</ion-label>
+                <ion-range formControlName="slidersize" min="15" max="500" color="primary">
                 </ion-range>
             </ion-item>
             <ion-item>
               <ion-label color="primary">Estimated time left vacant</ion-label>
               <ion-select formControlName="time" interface="popover">
                 <ion-option>1 month or less</ion-option>
-                <ion-option>1-6 months</ion-option>
+                <ion-option>1 to 6 months</ion-option>
                 <ion-option>6 months to 1 year</ion-option>
-                <ion-option>1 year or more</ion-option>
+                <ion-option>1 to 2 years</ion-option>
+                <ion-option>2 to 5 years</ion-option>
+                <ion-option>5 years or more</ion-option>
               </ion-select>
             </ion-item>
             <ion-item>
@@ -85,6 +103,7 @@
                 <ion-option>N/A</ion-option>
                 <ion-option>In working order</ion-option>
                 <ion-option>Work required</ion-option>
+                <ion-option>I'm not sure</ion-option>
               </ion-select>
             </ion-item>
             <ion-item>
@@ -93,6 +112,7 @@
                 <ion-option>N/A</ion-option>
                 <ion-option>In working order</ion-option>
                 <ion-option>Work required</ion-option>
+                <ion-option>I'm not sure</ion-option>
               </ion-select>
             </ion-item>
             <ion-item>
@@ -108,6 +128,7 @@
                 <ion-select interface="popover" formControlName="roof">
                   <ion-option selected="true">Good condition</ion-option>
                   <ion-option>Poor condition</ion-option>
+                  <ion-option>Collapsed</ion-option>
                 </ion-select>
             </ion-item>
             <ion-item>
@@ -115,7 +136,8 @@
                 <ion-select interface="popover" formControlName="garden">
                   <ion-option selected="true">Good condition</ion-option>
                   <ion-option>Poor condition</ion-option>
-                  <ion-option>Obstructed</ion-option>
+                  <ion-option>No garden</ion-option>
+                  <ion-option>View obstructed</ion-option>
                 </ion-select>
             </ion-item>
             <ion-item>
@@ -124,6 +146,7 @@
                   <ion-option selected="true">Fully furnished</ion-option>
                   <ion-option>Partially furnished</ion-option>
                   <ion-option>Not furnished</ion-option>
+                  <ion-option>I'm not sure</ion-option>
                 </ion-select>
             </ion-item>
             <ion-item>
@@ -139,14 +162,16 @@
                   <ion-option>8</ion-option>
                   <ion-option>9</ion-option>
                   <ion-option>10+</ion-option>
+                  <ion-option>I'm not sure</ion-option>
                 </ion-select>
             </ion-item>
             <ion-item>
                 <ion-label color="primary">Your relation to property</ion-label>
-                <ion-select interface="popover" formControlName="user">
-                  <ion-option selected="true">I am the owner</ion-option>
-                  <ion-option>I know the owner</ion-option>
+                <ion-select interface="popover" formControlName="user" [class.invalid]="!homes.controls.user.valid && blur">
+                  <ion-option selected="true">I am the owner of this property</ion-option>
+                  <ion-option>I know the owner of this property</ion-option>
                   <ion-option>I live in the area</ion-option>
+                  <ion-option>I have local knowledge of this area</ion-option>
                 </ion-select>
             </ion-item>
             <ion-item>

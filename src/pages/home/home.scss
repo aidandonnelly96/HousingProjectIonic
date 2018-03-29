@@ -1,29 +1,7 @@
 page-home {
-    
-}
-@-webkit-keyframes slideInSmooth {
-  0% {
-    -webkit-transform: translate3d(-100%,0,0);
-  }
-  100% {
-    -webkit-transform: translate3d(0,0,0);
-  }
-}
-
-@-webkit-keyframes slideOutSmooth {
-  0% {
-    -webkit-transform: translate3d(-100%,0,0);
-  }
-  100% {
-    -webkit-transform: translate3d(0,0,0);
-  }
-}
-
-.slide-in{
-   -webkit-animation: slideInSmooth ease-in 1;
-  animation: slideInSmooth ease-in 1;
-  -webkit-animation-fill-mode: forwards;
-  animation-fill-mode: forwards;
-  -webkit-animation-duration: 250ms;
-  animation-duration: 250ms;
-}
+    .info{
+        white-space: nowrap; 
+        overflow: hidden; 
+        text-overflow: ellipsis;
+    }
+}   

@@ -1,17 +1,17 @@
 <ion-menu [content]="content" id="authenticated">
   <ion-header>
     <ion-navbar color="primary">
-      <ion-title>Menu</ion-title>
+      <ion-title>Deed</ion-title>
     </ion-navbar>
   </ion-header>
   <ion-content>
     <ion-list>
       <button menuClose ion-item *ngFor="let p of pages" (click)="openPage(p)">
-        <ion-icon name={{p.icon}}></ion-icon>
+        <!--<ion-icon name={{p.icon}}></ion-icon>-->
         {{p.title}}
       </button>
       <button menuClose ion-item (click)="presentConfirmLogout()">
-        <ion-icon name="log-out"></ion-icon>
+        <!--<ion-icon name="log-out"></ion-icon>-->
         Log out
       </button>
     </ion-list>
@@ -21,13 +21,12 @@
 <ion-menu [content]="content" id="unauthenticated">
   <ion-header>
     <ion-navbar color="primary">
-      <ion-title>Menu</ion-title>
+      <ion-title>Deed</ion-title>
     </ion-navbar>
   </ion-header>
   <ion-content>
     <ion-list>
       <button menuClose ion-item *ngFor="let login of login" (click)="openPage(login)">
-        <ion-icon name="log-in"></ion-icon>
         Log in
       </button>
     </ion-list>

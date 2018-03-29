@@ -1,0 +1,22 @@
+<!--
+  Generated template for the FullscreenPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-content no-border color="other">
+    <div style="width: 100%; height: 100vh;" ion-fixed>
+    <ion-navbar color="other" >
+      <ion-title>
+          {{slides.getActiveIndex()+1}} of {{sources.length}}
+      </ion-title>
+    </ion-navbar>
+    <ion-slides initialSlide=currentIndex pager="true" style="width: 100%; height: 100vh;">
+        <ion-slide *ngFor="let s of sources" >
+            <ion-item color="other" center>
+                <img style="height: 100vh; margin-left: auto; margin-right: auto; display: block;" src={{s}}>
+            </ion-item>
+        </ion-slide>
+    </ion-slides>
+    </div>
+</ion-content>

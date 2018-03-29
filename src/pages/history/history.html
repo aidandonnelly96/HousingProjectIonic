@@ -5,23 +5,64 @@
   Ionic pages and navigation.
 -->
 <ion-header>
-
   <ion-navbar color="primary">
     <ion-title>History</ion-title>
   </ion-navbar>
-
 </ion-header>
+
 <ion-content>
     <ion-list>
-        <ion-card #item *ngFor="let h of homes">
-            <button ion-item  (click)="goToHomeDetail(h)">
-                <ion-thumbnail item-start>
-                    <img src={{h.thumbnail.url}}>
-                </ion-thumbnail>
-                <h2 text-capitalize><a>{{h.title}}</a></h2>
-                <p>Status: {{h.status}}</p>
-                <p>{{h.datePosted}}</p>
-            </button>
-        </ion-card>
+        <ion-item-divider color="light" *ngIf="homes.length!=1">{{homes.length}} results</ion-item-divider>
+        <ion-item-divider color="light" *ngIf="db.homes.length==1">{{homes.length}} result</ion-item-divider>
+        <ion-grid no-padding>
+            <ion-row>
+              <ion-col col-12 col-md-6 col-lg-4 col-xl-3 *ngFor="let h of homes | slice:0:last;">
+                <ion-card class="home-card" #item>
+                  <img (click)="goToHomeDetail(h)" src={{h.thumbnail.url}} style="height: 30vh"/>
+                  <ion-card-content (click)="goToHomeDetail(h)" padding>
+                        <ion-card-title text-capitalize style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                          {{h.title}}
+                        </ion-card-title>
+                        <p>
+                            <ion-icon name="calendar"></ion-icon>
+                            {{h.datePosted}}
+                        </p>
+                        <p class="info" *ngIf="h.info.length>0">
+                            {{h.info}}
+                        </p>
+                        <p *ngIf="h.info.length==0">
+                          <br>
+                        </p>
+                  </ion-card-content>
+                  <ion-row *ngIf="auth.getCurrentUser()!=null">
+                      <ion-col text-right *ngIf="h.postStatus=='published'">
+                        <button ion-button clear (click)="editHome(h)" color="accent" icon-start>
+                            <ion-icon name="create"></ion-icon>
+                            Edit
+                        </button>
+                      </ion-col>
+                      <ion-col *ngIf="h.postStatus=='published'">
+                        <button ion-button clear (click)="removeHome(h)" color="danger" icon-start>
+                            <ion-icon name="trash"></ion-icon>
+                            Remove
+                        </button>
+                      </ion-col>
+                      <ion-col *ngIf="h.postStatus=='deleted'">
+                        <button ion-button clear (click)="putBack(h)" color="accent" icon-start>
+                            <ion-icon name="redo" ></ion-icon>
+                            Put Back
+                        </button>
+                      </ion-col>
+                      <ion-col *ngIf="h.postStatus=='edited'">
+                        <button ion-button clear (click)="revert(h)" color="accent" icon-start>
+                            <ion-icon name="redo" ></ion-icon>
+                            Revert
+                        </button>
+                      </ion-col>
+                  </ion-row>
+                </ion-card>
+              </ion-col>
+            </ion-row>
+        </ion-grid>
     </ion-list>
 </ion-content>
